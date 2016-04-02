@@ -29,20 +29,21 @@ public class ChinaCaipuMain {
 	 * @throws Exception
 	 */
 	public void getCaipuList() throws Exception {
-
+		boolean isLocal = false;
 		for (int in = 0; in < 11; in++) {
 			// 1、获取URL
 			String url = ChinaCaipu.genUrl(in);
 
 			// 2、获取网页内容
-			String data = ChinaCaipu.getContent(url);
+			String data = ChinaCaipu.getInstance(isLocal).getCaipuContent(url);
 
 			// 3、解析网页内容
-			List<Cai> datas = ChinaCaipu.parseListHtml(data);
+			List<Cai> datas = ChinaCaipu.getInstance(isLocal).parseList(data);
 
 			// 4、存储内容
 			for (Cai cai : datas) {
-				boolean result = ChinaCaipu.saveContent(cai);
+				boolean result = ChinaCaipu.getInstance(isLocal)
+						.saveCaipuContent(cai);
 				LOG.D(cai.mName + "=over=" + result);
 			}
 			//
@@ -68,11 +69,13 @@ public class ChinaCaipuMain {
 		List<Cai> dataList = DBCaiListUtil.findAllCai();
 		int count = dataList.size();
 		StringBuilder sb = new StringBuilder();
+		boolean isLocal = false;
 
 		for (int in = count - 1 - 100; in >= 0; in--) {
 			Cai cai = dataList.get(in);
 
-			String data = ChinaCaipu.getRemoteContent(cai.mDetail);
+			String data = ChinaCaipu.getInstance(isLocal)
+					.getCaipuRemoteContent(cai.mDetail);
 
 			CaiDetail caipu = CaipuDetailParser.parseDetail(data);
 
@@ -83,8 +86,10 @@ public class ChinaCaipuMain {
 
 				sb.append(cai.mName).append(",").append(result);
 
-				ChinaCaipu.saveLocal(sb.toString(),
-						"D://getCaipuDetailResult.csv", true);
+				// ChinaCaipu.saveLocal(sb.toString(),
+				// "D://getCaipuDetailResult.csv", true);
+				ChinaCaipu.getInstance(isLocal).saveCaipuContent(null,
+						"D://getCaipuDetailResult.csv", true, sb.toString());
 			}
 
 			//

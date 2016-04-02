@@ -28,8 +28,10 @@ public final class DBCaiDetailUtil {
 		public static void main(String[] args) throws Exception {
 
 			List<Cai> data = DBCaiDetailUtil.findAllCaiByName("XOœÃ»‚Ù’");
-			String path = ChinaCaipu.saveLocal(data.get(0).mDetail,
-					"D://test.html", false);
+			// String path = ChinaCaipu.saveLocal(data.get(0).mDetail,
+			// "D://test.html", false);
+			String path = ChinaCaipu.getInstance(false).saveCaipuContent(null,
+					"D://DbCaiDetailTest.html", false, data.get(0).mDetail);
 			LOG.D("test result:" + path);
 		}
 	}
