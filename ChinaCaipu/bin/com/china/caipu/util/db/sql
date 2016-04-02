@@ -1,0 +1,20 @@
+
+#
+CREATE DATABASE chinacaipu;
+
+#
+USE chinacaipu;
+
+
+# create table yuecai
+CREATE TABLE yuecai (
+name VARCHAR(128) PRIMARY KEY NOT NULL,
+descrip VARCHAR(512),
+image VARCHAR(256),
+detail TEXT
+);
+
+#inset test data
+INSERT INTO yuecai (name,descrip,image,detail) VALUES(
+'yue','i am yue cai' ,'http://www.cim.com',"it is detail yue cai"
+);
