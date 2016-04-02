@@ -7,8 +7,8 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.List;
 
+import com.china.caipu.constant.Config;
 import com.china.caipu.vo.Cai;
 import com.mk.util.MKUtils;
 
@@ -22,8 +22,10 @@ import com.mk.util.MKUtils;
  */
 final class LocalAbstractData extends AbstractData {
 
+	static LocalAbstractData instance = new LocalAbstractData();
+
 	/**
-	 * 
+	 * @deprecated instead of {@link #saveContent(Cai, Object...)}
 	 * 
 	 * @param data
 	 * @param pathName
@@ -32,16 +34,17 @@ final class LocalAbstractData extends AbstractData {
 	 */
 	public static String saveLocal(String data, String pathName, boolean append)
 			throws Exception {
-		File file = new File(pathName);
-		if (!file.exists()) {
-			file.createNewFile();
-		}
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(file, append)));
-		bw.write(data);
-		bw.close();
-
-		return pathName;
+		// File file = new File(pathName);
+		// if (!file.exists()) {
+		// file.createNewFile();
+		// }
+		// BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
+		// new FileOutputStream(file, append)));
+		// bw.write(data);
+		// bw.close();
+		//
+		// return pathName;
+		return instance.saveContent(null, pathName, append, data);
 	}
 
 	/**
@@ -57,6 +60,7 @@ final class LocalAbstractData extends AbstractData {
 	}
 
 	/**
+	 * @deprecated instead of {@link #getContent(Object, Object...)}
 	 * 
 	 * @param cls
 	 * @param packageName
@@ -66,17 +70,20 @@ final class LocalAbstractData extends AbstractData {
 	 */
 	public static String getLocal(Class<?> cls, String packageName,
 			String fileName) throws Exception {
-		InputStream input = cls.getResourceAsStream(genPath(packageName,
-				fileName));
-		BufferedReader reader = new BufferedReader(new InputStreamReader(input,
-				"utf-8"), 16 * 1024);
-		StringBuffer sb = new StringBuffer();
-		String tmp = null;
-		while ((tmp = reader.readLine()) != null) {
-			sb.append(tmp);
-		}
-		input.close();
-		return sb.toString();
+		// InputStream input = cls.getResourceAsStream(genPath(packageName,
+		// fileName));
+		// BufferedReader reader = new BufferedReader(new
+		// InputStreamReader(input,
+		// "utf-8"), 16 * 1024);
+		// StringBuffer sb = new StringBuffer();
+		// String tmp = null;
+		// while ((tmp = reader.readLine()) != null) {
+		// sb.append(tmp);
+		// }
+		// input.close();
+		// return sb.toString();
+
+		return instance.getContent(cls, packageName, fileName);
 	}
 
 	/**
@@ -96,32 +103,44 @@ final class LocalAbstractData extends AbstractData {
 		return sb.toString();
 	}
 
+	/**
+	 * args[0]=pathName,args[1]=append,args[2]=data;
+	 * 
+	 * @param cai
+	 *            not use
+	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public boolean saveContent(Cai cai) throws Exception {
+	public <T> T saveContent(Cai cai, Object... args) throws Exception {
 		// TODO Auto-generated method stub
-		return false;
+		File file = new File(args[0].toString());
+		if (!file.exists()) {
+			file.createNewFile();
+		}
+		BufferedWriter bw = new BufferedWriter(
+				new OutputStreamWriter(new FileOutputStream(file,
+						Boolean.valueOf(args[1].toString()))));
+		bw.write(args[2].toString());
+		bw.close();
+
+		return (T) file.getAbsolutePath();
 	}
 
 	@Override
-	public String getContent(Object obj) throws Exception {
+	public String getContent(Object obj, Object... args) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getContent(Class<?> obj) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getContent(Class<?> cls, String packageName, String fileName)
-			throws Exception {
-		return null;
-	}
-
-	@Override
-	public List<Cai> parseListHtml(String data) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Class<?> cls = (Class<?>) obj;
+		InputStream input = cls.getResourceAsStream(genPath(args[0].toString(),
+				args[1].toString()));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(input,
+				Config.CHARSET), 16 * 1024);
+		StringBuffer sb = new StringBuffer();
+		String tmp = null;
+		while ((tmp = reader.readLine()) != null) {
+			sb.append(tmp);
+		}
+		input.close();
+		return sb.toString();
 	}
 
 }// end

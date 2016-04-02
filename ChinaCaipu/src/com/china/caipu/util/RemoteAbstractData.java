@@ -4,9 +4,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.List;
 
 import com.china.caipu.constant.Config;
+import com.china.caipu.util.db.DBCaiListUtil;
 import com.china.caipu.vo.Cai;
 import com.mk.log.LOG;
 
@@ -20,20 +20,19 @@ public final class RemoteAbstractData extends AbstractData {
 
 	static RemoteAbstractData instance = new RemoteAbstractData();
 
+	/**
+	 * save to db
+	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<Cai> parseListHtml(String data) throws Exception {
+	public <T> T saveContent(Cai cai, Object... args) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		Boolean boo = DBCaiListUtil.addCai(cai);
+		return (T) boo;
 	}
 
 	@Override
-	public boolean saveContent(Cai cai) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public String getContent(Object obj) throws Exception {
+	public String getContent(Object obj, Object... args) throws Exception {
 		// TODO Auto-generated method stub
 		URL url = new URL(obj.toString());
 		HttpURLConnection.setFollowRedirects(true);

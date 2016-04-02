@@ -3,7 +3,6 @@ package com.china.caipu.util;
 import java.util.List;
 
 import com.china.caipu.util.db.DBCaiListUtil;
-import com.china.caipu.util.parser.CaipuListParser;
 import com.china.caipu.vo.Cai;
 import com.mk.log.LOG;
 
@@ -37,7 +36,7 @@ public final class ChinaCaipu {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated instead of {@link #saveCaipuContent(Cai, Object...)}
 	 * 
 	 * @param data
 	 * @param pathName
@@ -48,7 +47,8 @@ public final class ChinaCaipu {
 	 */
 	public static String saveLocal(String data, String pathName, boolean append)
 			throws Exception {
-		return LocalAbstractData.saveLocal(data, pathName, append);
+		// return LocalAbstractData.saveLocal(data, pathName, append);
+		return instance.saveCaipuContent(null, pathName, append, data);
 	}
 
 	/**
@@ -59,7 +59,8 @@ public final class ChinaCaipu {
 	 * @throws Exception
 	 */
 	public static List<Cai> parseListHtml(String data) throws Exception {
-		return CaipuListParser.parseListHtml(data);
+		// return CaipuListParser.parseListHtml(data);
+		return instance.parseList(data);
 	}
 
 	/**
@@ -74,14 +75,25 @@ public final class ChinaCaipu {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated {@link #getCaipuRemoteContent(String)}
 	 * 
 	 * @param url
 	 * @return
 	 * @throws Exception
 	 */
 	public static String getRemoteContent(String url) throws Exception {
-		return RemoteAbstractData.getRemoteContent(url);
+		// return RemoteAbstractData.getRemoteContent(url);
+		return instance.getCaipuRemoteContent(url);
+	}
+
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 * @throws Exception
+	 */
+	public String getCaipuRemoteContent(String url) throws Exception {
+		return mAbstractData.getContent(url);
 	}
 
 	/**
@@ -94,7 +106,7 @@ public final class ChinaCaipu {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated instead of {@link #getCaipuContent(Object)}
 	 * 
 	 * @param obj
 	 *            class or api
@@ -111,6 +123,7 @@ public final class ChinaCaipu {
 	}
 
 	/**
+	 * »ñÈ¡ÄÚÈÝ
 	 * 
 	 * @param obj
 	 * @return
@@ -121,7 +134,7 @@ public final class ChinaCaipu {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated instead of {@link #saveCaipuContent(Cai, Object...)}
 	 * 
 	 * @param cai
 	 * @return
@@ -135,8 +148,14 @@ public final class ChinaCaipu {
 		return instance.saveCaipuContent(cai);
 	}
 
-	public boolean saveCaipuContent(Cai cai) throws Exception {
-		return mAbstractData.saveContent(cai);
+	/**
+	 * 
+	 * @param cai
+	 * @return
+	 * @throws Exception
+	 */
+	public <T> T saveCaipuContent(Cai cai, Object... objects) throws Exception {
+		return mAbstractData.saveContent(cai, objects);
 	}
 
 	/**
