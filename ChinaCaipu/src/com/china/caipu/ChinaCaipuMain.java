@@ -20,7 +20,7 @@ import com.mk.log.LOG;
 public class ChinaCaipuMain {
 
 	public static void main(String[] args) throws Exception {
-
+		new ChinaCaipuMain().getCaipuList();
 	}
 
 	/**
@@ -30,7 +30,7 @@ public class ChinaCaipuMain {
 	 */
 	public void getCaipuList() throws Exception {
 		boolean isLocal = false;
-		for (int in = 0; in < 11; in++) {
+		for (int in = 11; in < 12; in++) {
 			// 1¡¢»ñÈ¡URL
 			String url = ChinaCaipu.genUrl(in);
 
