@@ -87,9 +87,15 @@ public class ChinaCaipuMain {
 	}
 
 	void elevenCaipuDetail() throws Exception {
-		String str = LocalAbstractData.getLocal(getClass(),
-				MKUtils.getPackageName(getClass()), "11");
-		LOG.D(str);
+		String[] names = { "炒蛤蜊的做法", "凤凰里脊的做法", "蛤蜊氽鲫鱼", "龙井鲍鱼的做法", "长白山人参炖老鸡",
+				"生嗜鸡块", "清江鱼茄子煲", "蛋心圣女果的做法", "秘制国药中华鳖", "鲍鱼四宝羹", "蒜心生鱼片",
+				"香辣蟹的做法", "陈醋海蛰头", "什锦炒鱼丁", "银鱼虾干焖节瓜", "剁椒五花肉的做法", "蜜汁叉烧的做法",
+				"香煎牛仔骨", "西梅卤鸡翅的做法", "鸡汤蚝油香菇", "酱蒜苗炒鱿鱼", "甜辣松子鲱鱼", "干贝蟹黄山药羹",
+				"香煎黑鲷鱼（鳕鱼）", "蒜香辣味海白的做法", "辣炒蛤蜊的做法", "牡蛎的做法", "韩式辣炒鱿鱼的做法",
+				"兰豆鸡丁的做法", "什锦炒通心粉的做法" };
+		
+		
+ 
 	}
 
 	static void handleCaipuDetail(Cai cai, boolean isLocal) throws Exception {
