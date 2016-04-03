@@ -20,7 +20,7 @@ import com.mk.util.MKUtils;
  * 
  *         2016-4-2
  */
-final class LocalAbstractData extends AbstractData {
+public final class LocalAbstractData extends AbstractData {
 
 	static LocalAbstractData instance = new LocalAbstractData();
 
@@ -64,6 +64,7 @@ final class LocalAbstractData extends AbstractData {
 	 * 
 	 * @param cls
 	 * @param packageName
+	 *            {@link MKUtils#getPackageName(Class)}
 	 * @param fileName
 	 * @return
 	 * @throws Exception
@@ -126,6 +127,12 @@ final class LocalAbstractData extends AbstractData {
 		return (T) file.getAbsolutePath();
 	}
 
+	/**
+	 * args[0]=packageName,args[1]=fileName
+	 * 
+	 * @param obj
+	 *            class
+	 */
 	@Override
 	public String getContent(Object obj, Object... args) throws Exception {
 		// TODO Auto-generated method stub

@@ -3,6 +3,7 @@ package com.china.caipu;
 import java.util.List;
 
 import com.china.caipu.util.ChinaCaipu;
+import com.china.caipu.util.LocalAbstractData;
 import com.china.caipu.util.db.DBCaiDetailUtil;
 import com.china.caipu.util.db.DBCaiListUtil;
 import com.china.caipu.util.parser.CaipuDetailParser;
@@ -10,6 +11,7 @@ import com.china.caipu.vo.Cai;
 import com.china.caipu.vo.CaiDetail;
 import com.mk.IsUtil;
 import com.mk.log.LOG;
+import com.mk.util.MKUtils;
 
 /**
  * 
@@ -20,7 +22,7 @@ import com.mk.log.LOG;
 public class ChinaCaipuMain {
 
 	public static void main(String[] args) throws Exception {
-		new ChinaCaipuMain().getCaipuList();
+		new ChinaCaipuMain().elevenCaipuDetail();
 	}
 
 	/**
@@ -28,7 +30,7 @@ public class ChinaCaipuMain {
 	 * 
 	 * @throws Exception
 	 */
-	public void getCaipuList() throws Exception {
+	void getCaipuList() throws Exception {
 		boolean isLocal = false;
 		for (int in = 11; in < 12; in++) {
 			// 1¡¢»ñÈ¡URL
@@ -64,33 +66,17 @@ public class ChinaCaipuMain {
 	 * 
 	 * @throws Exception
 	 */
-	public void getCaipuDetail() throws Exception {
+	void getCaipuDetail() throws Exception {
 
 		List<Cai> dataList = DBCaiListUtil.findAllCai();
 		int count = dataList.size();
-		StringBuilder sb = new StringBuilder();
+
 		boolean isLocal = false;
 
 		for (int in = count - 1 - 100; in >= 0; in--) {
 			Cai cai = dataList.get(in);
 
-			String data = ChinaCaipu.getInstance(isLocal)
-					.getCaipuRemoteContent(cai.mDetail);
-
-			CaiDetail caipu = CaipuDetailParser.parseDetail(data);
-
-			if (IsUtil.isNotNull(caipu)) {
-				// LOG.D("" + caipu);
-				boolean result = DBCaiDetailUtil.addCaiDetail(caipu);
-				LOG.D("over : " + cai.mName + ":  -->" + result);
-
-				sb.append(cai.mName).append(",").append(result);
-
-				// ChinaCaipu.saveLocal(sb.toString(),
-				// "D://getCaipuDetailResult.csv", true);
-				ChinaCaipu.getInstance(isLocal).saveCaipuContent(null,
-						"D://getCaipuDetailResult.csv", true, sb.toString());
-			}
+			handleCaipuDetail(cai, isLocal);
 
 			//
 			Thread.sleep(genSleep());
@@ -98,6 +84,31 @@ public class ChinaCaipuMain {
 		}
 
 		LOG.D("   task over  ");
+	}
+
+	void elevenCaipuDetail() throws Exception {
+		String str = LocalAbstractData.getLocal(getClass(),
+				MKUtils.getPackageName(getClass()), "11");
+		LOG.D(str);
+	}
+
+	static void handleCaipuDetail(Cai cai, boolean isLocal) throws Exception {
+		String data = ChinaCaipu.getInstance(isLocal).getCaipuRemoteContent(
+				cai.mDetail);
+
+		CaiDetail caipu = CaipuDetailParser.parseDetail(data);
+
+		if (IsUtil.isNotNull(caipu)) {
+			// LOG.D("" + caipu);
+			boolean result = DBCaiDetailUtil.addCaiDetail(caipu);
+			LOG.D("over : " + cai.mName + ":  -->" + result);
+
+			StringBuilder sb = new StringBuilder();
+			sb.append(cai.mName).append(",").append(result);
+
+			ChinaCaipu.getInstance(isLocal).saveCaipuContent(data,
+					"D://getCaipuDetailResult.csv", true);
+		}
 	}
 
 	/**

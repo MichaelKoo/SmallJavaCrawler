@@ -7,6 +7,8 @@ package com.china.caipu.constant;
  *         2016-4-2
  */
 public final class Config {
+	/** for DB table query all*/
+	public static final String ALL = "*";
 
 	public static final int TIME_OUT = 15 * 1000;
 

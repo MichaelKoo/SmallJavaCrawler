@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.china.caipu.constant.Config;
 import com.china.caipu.vo.Cai;
 import com.mk.IsUtil;
 
@@ -120,7 +121,48 @@ public final class DBCaiListUtil {
 		return false;
 	}
 
-	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 * @throws Exception
+	 */
+	public static Cai findCai(String name) throws Exception {
+		Connection conn = ConnUtil.getConnection();
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			StringBuilder sb = new StringBuilder();
+			sb.append("SELECT ");
+			sb.append(Config.ALL);
+			sb.append(" FROM ");
+			sb.append(TABLE);
+			sb.append(" WHERE ");
+			sb.append(CPField.NAME);
+			sb.append("=?");
+			
+
+			psmt = conn.prepareStatement(sb.toString());
+			psmt.setString(1, name);
+			
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				Cai cai = new Cai();
+				cai.mName = rs.getString(1);
+				cai.mDescrip = rs.getString(2);
+				cai.mImage = rs.getString(3);
+				cai.mDetail = rs.getString(4);
+				return cai;
+			}
+
+		} finally {
+			close(rs);
+			close(psmt);
+			ConnUtil.closeConn(conn);
+		}
+
+		return null;
+	}
 
 	/**
 	 * 
