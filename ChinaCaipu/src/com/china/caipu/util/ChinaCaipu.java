@@ -18,6 +18,11 @@ import com.mk.log.LOG;
 public final class ChinaCaipu {
 	private AbstractData mAbstractData;
 
+	/**
+	 * 
+	 * @param isLocal
+	 *            true ,load data from local package,else from network
+	 */
 	private ChinaCaipu(boolean isLocal) {
 		if (isLocal) {
 			mAbstractData = new LocalAbstractData();
@@ -36,34 +41,6 @@ public final class ChinaCaipu {
 	}
 
 	/**
-	 * @deprecated instead of {@link #saveCaipuContent(Cai, Object...)}
-	 * 
-	 * @param data
-	 * @param pathName
-	 * @param append
-	 * @return
-	 * @throws Exception
-	 * 
-	 */
-	public static String saveLocal(String data, String pathName, boolean append)
-			throws Exception {
-		// return LocalAbstractData.saveLocal(data, pathName, append);
-		return instance.saveCaipuContent(null, pathName, append, data);
-	}
-
-	/**
-	 * @deprecated instead of {@link #parseList(String)}
-	 * 
-	 * @param data
-	 * @return
-	 * @throws Exception
-	 */
-	public static List<Cai> parseListHtml(String data) throws Exception {
-		// return CaipuListParser.parseListHtml(data);
-		return instance.parseList(data);
-	}
-
-	/**
 	 * 
 	 * @param data
 	 *            需要解析的数据
@@ -75,18 +52,7 @@ public final class ChinaCaipu {
 	}
 
 	/**
-	 * @deprecated {@link #getCaipuRemoteContent(String)}
-	 * 
-	 * @param url
-	 * @return
-	 * @throws Exception
-	 */
-	public static String getRemoteContent(String url) throws Exception {
-		// return RemoteAbstractData.getRemoteContent(url);
-		return instance.getCaipuRemoteContent(url);
-	}
-
-	/**
+	 * 获取远程数据， {@link #ChinaCaipu(boolean)} is false
 	 * 
 	 * @param url
 	 * @return
@@ -94,32 +60,6 @@ public final class ChinaCaipu {
 	 */
 	public String getCaipuRemoteContent(String url) throws Exception {
 		return mAbstractData.getContent(url);
-	}
-
-	/**
-	 * 
-	 * @param index
-	 * @return
-	 */
-	public static String genUrl(int index) {
-		return RemoteAbstractData.genUrl(index);
-	}
-
-	/**
-	 * @deprecated instead of {@link #getCaipuContent(Object)}
-	 * 
-	 * @param obj
-	 *            class or api
-	 * @return
-	 * @throws Exception
-	 */
-	public static String getContent(Object obj) throws Exception {
-		// if (obj instanceof String) {
-		// return RemoteAbstractData.getRemoteContent(obj.toString());
-		// } else if (obj instanceof Class) {
-		// return LocalAbstractData.getLocal(obj.getClass());
-		// }
-		return instance.getCaipuContent(obj);
 	}
 
 	/**
@@ -134,21 +74,6 @@ public final class ChinaCaipu {
 	}
 
 	/**
-	 * @deprecated instead of {@link #saveCaipuContent(Cai, Object...)}
-	 * 
-	 * @param cai
-	 * @return
-	 * @throws Exception
-	 */
-	public static boolean saveContent(Cai cai) throws Exception {
-		// boolean result = false;
-		// result = DBCaiListUtil.addCai(cai);
-		// return result;
-
-		return instance.saveCaipuContent(cai);
-	}
-
-	/**
 	 * 
 	 * @param cai
 	 * @return
@@ -156,6 +81,21 @@ public final class ChinaCaipu {
 	 */
 	public <T> T saveCaipuContent(Cai cai, Object... objects) throws Exception {
 		return mAbstractData.saveContent(cai, objects);
+	}
+
+	/**
+	 * save local content
+	 * 
+	 * @param data
+	 * @param pathName
+	 * @param append
+	 * @return
+	 * @throws Exception
+	 */
+	public String saveCaipuContent(String data, String pathName, boolean append)
+			throws Exception {
+
+		return saveCaipuContent(null, pathName, append, data);
 	}
 
 	/**
@@ -173,4 +113,13 @@ public final class ChinaCaipu {
 		}
 	}
 
+	/**
+	 * 
+	 * @param index
+	 *            page num
+	 * @return
+	 */
+	public static String genUrl(int index) {
+		return RemoteAbstractData.genUrl(index);
+	}
 }// end
