@@ -3,7 +3,6 @@ package com.china.caipu;
 import java.util.List;
 
 import com.china.caipu.util.ChinaCaipu;
-import com.china.caipu.util.LocalAbstractData;
 import com.china.caipu.util.db.DBCaiDetailUtil;
 import com.china.caipu.util.db.DBCaiListUtil;
 import com.china.caipu.util.parser.CaipuDetailParser;
@@ -11,7 +10,6 @@ import com.china.caipu.vo.Cai;
 import com.china.caipu.vo.CaiDetail;
 import com.mk.IsUtil;
 import com.mk.log.LOG;
-import com.mk.util.MKUtils;
 
 /**
  * 
@@ -22,7 +20,7 @@ import com.mk.util.MKUtils;
 public class ChinaCaipuMain {
 
 	public static void main(String[] args) throws Exception {
-		new ChinaCaipuMain().elevenCaipuDetail();
+
 	}
 
 	/**
@@ -76,7 +74,7 @@ public class ChinaCaipuMain {
 		for (int in = count - 1 - 100; in >= 0; in--) {
 			Cai cai = dataList.get(in);
 
-			handleCaipuDetail(cai, isLocal);
+			handleCaipuDetail(cai.mDetail, isLocal);
 
 			//
 			Thread.sleep(genSleep());
@@ -87,33 +85,30 @@ public class ChinaCaipuMain {
 	}
 
 	void elevenCaipuDetail() throws Exception {
-		String[] names = { "³´¸òòÛµÄ×ö·¨", "·ï»ËÀï¼¹µÄ×ö·¨", "¸òòÛÙÛöêÓã", "Áú¾®±«ÓãµÄ×ö·¨", "³¤°×É½ÈË²ÎìÀÀÏ¼¦",
-				"ÉúÊÈ¼¦¿é", "Çå½­ÓãÇÑ×ÓìÒ", "µ°ÐÄÊ¥Å®¹ûµÄ×ö·¨", "ÃØÖÆ¹úÒ©ÖÐ»ª±î", "±«ÓãËÄ±¦¸þ", "ËâÐÄÉúÓãÆ¬",
-				"ÏãÀ±Ð·µÄ×ö·¨", "³Â´×º£ÕÝÍ·", "Ê²½õ³´Óã¶¡", "ÒøÓãÏº¸ÉìË½Ú¹Ï", "¶ç½·Îå»¨ÈâµÄ×ö·¨", "ÃÛÖ­²æÉÕµÄ×ö·¨",
-				"Ïã¼åÅ£×Ð¹Ç", "Î÷Ã·Â±¼¦³áµÄ×ö·¨", "¼¦ÌÀòºÓÍÏã¹½", "½´ËâÃç³´öÏÓã", "ÌðÀ±ËÉ×ÓöîÓã", "¸É±´Ð·»ÆÉ½Ò©¸þ",
-				"Ïã¼åºÚöôÓã£¨÷¨Óã£©", "ËâÏãÀ±Î¶º£°×µÄ×ö·¨", "À±³´¸òòÛµÄ×ö·¨", "ÄµòÃµÄ×ö·¨", "º«Ê½À±³´öÏÓãµÄ×ö·¨",
-				"À¼¶¹¼¦¶¡µÄ×ö·¨", "Ê²½õ³´Í¨ÐÄ·ÛµÄ×ö·¨" };
-		
-		
- 
+		String[] urls = {
+				"http://www.chinacaipu.com/menu/guangdongecai/6739.html",
+				"http://www.chinacaipu.com/menu/guangdongecai/6958.html" };
+
+		for (String url : urls) {
+			handleCaipuDetail(url, false);
+		}
+
+		LOG.D("task over");
+
 	}
 
-	static void handleCaipuDetail(Cai cai, boolean isLocal) throws Exception {
+	static void handleCaipuDetail(String detail, boolean isLocal)
+			throws Exception {
 		String data = ChinaCaipu.getInstance(isLocal).getCaipuRemoteContent(
-				cai.mDetail);
+				detail);
 
 		CaiDetail caipu = CaipuDetailParser.parseDetail(data);
 
 		if (IsUtil.isNotNull(caipu)) {
 			// LOG.D("" + caipu);
 			boolean result = DBCaiDetailUtil.addCaiDetail(caipu);
-			LOG.D("over : " + cai.mName + ":  -->" + result);
+			LOG.D("over : " + detail + ":  -->" + result);
 
-			StringBuilder sb = new StringBuilder();
-			sb.append(cai.mName).append(",").append(result);
-
-			ChinaCaipu.getInstance(isLocal).saveCaipuContent(data,
-					"D://getCaipuDetailResult.csv", true);
 		}
 	}
 

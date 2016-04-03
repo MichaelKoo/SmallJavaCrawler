@@ -94,8 +94,10 @@ public final class ChinaCaipu {
 	 */
 	public String saveCaipuContent(String data, String pathName, boolean append)
 			throws Exception {
+		Boolean result = saveCaipuContent(null, pathName, append, data);
 
-		return saveCaipuContent(null, pathName, append, data);
+		return result.toString();
+
 	}
 
 	/**
