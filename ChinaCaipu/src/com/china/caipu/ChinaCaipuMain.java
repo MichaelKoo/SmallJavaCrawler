@@ -28,7 +28,7 @@ public class ChinaCaipuMain {
 	 * 
 	 * @throws Exception
 	 */
-	void getCaipuList() throws Exception {
+	static void getCaipuList() throws Exception {
 		boolean isLocal = false;
 		for (int in = 11; in < 12; in++) {
 			// 1¡¢»ñÈ¡URL
@@ -64,7 +64,7 @@ public class ChinaCaipuMain {
 	 * 
 	 * @throws Exception
 	 */
-	void getCaipuDetail() throws Exception {
+	static void getCaipuDetail() throws Exception {
 
 		List<Cai> dataList = DBCaiListUtil.findAllCai();
 		int count = dataList.size();
@@ -84,32 +84,28 @@ public class ChinaCaipuMain {
 		LOG.D("   task over  ");
 	}
 
-	void elevenCaipuDetail() throws Exception {
-		String[] urls = {
-				"http://www.chinacaipu.com/menu/guangdongecai/6739.html",
-				"http://www.chinacaipu.com/menu/guangdongecai/6958.html" };
-
-		for (String url : urls) {
-			handleCaipuDetail(url, false);
-		}
-
-		LOG.D("task over");
-
-	}
-
+	/**
+	 * 
+	 * @param detail
+	 * @param isLocal
+	 * @throws Exception
+	 */
 	static void handleCaipuDetail(String detail, boolean isLocal)
 			throws Exception {
+
 		String data = ChinaCaipu.getInstance(isLocal).getCaipuRemoteContent(
 				detail);
 
 		CaiDetail caipu = CaipuDetailParser.parseDetail(data);
 
 		if (IsUtil.isNotNull(caipu)) {
-			// LOG.D("" + caipu);
+
 			boolean result = DBCaiDetailUtil.addCaiDetail(caipu);
 			LOG.D("over : " + detail + ":  -->" + result);
 
 		}
+		
+		
 	}
 
 	/**
