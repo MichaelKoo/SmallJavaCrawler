@@ -1,7 +1,9 @@
 package com.china.caipu;
 
+import java.io.InputStream;
 import java.util.List;
 
+import com.china.caipu.img.CaiImageFactory;
 import com.china.caipu.util.ChinaCaipu;
 import com.china.caipu.util.db.DBCaiDetailUtil;
 import com.china.caipu.util.db.DBCaiListUtil;
@@ -21,6 +23,29 @@ public class ChinaCaipuMain {
 
 	public static void main(String[] args) throws Exception {
 
+	}
+
+	/**
+	 * 1°¢’“µΩÕº∆¨µÿ÷∑£ª
+	 * 
+	 * 2°¢œ¬‘ÿÕº∆¨£ª
+	 * 
+	 * 3°¢∏˘æ›≤À√˚¥Ê¥¢Õº∆¨µÿ÷∑£ª
+	 * 
+	 * @throws Exception
+	 */
+	static void getCaipuImage() throws Exception {
+		CaiImageFactory factory = CaiImageFactory.getInstance();
+		List<Cai> all = factory.findAllCai();
+		for (Cai cai : all) {
+			InputStream input = factory.downLoadImage(cai.mImage);
+			String path = factory.saveImage(input);
+			LOG.D(cai.mName + "<---->" + path);
+			if (input != null) {
+				input.close();
+			}
+		}
+		LOG.D("task over");
 	}
 
 	/**
@@ -104,8 +129,7 @@ public class ChinaCaipuMain {
 			LOG.D("over : " + detail + ":  -->" + result);
 
 		}
-		
-		
+
 	}
 
 	/**
