@@ -23,7 +23,7 @@ import com.mk.log.LOG;
 public class ChinaCaipuMain {
 
 	public static void main(String[] args) throws Exception {
-		getCaipuImage();
+		handleCaipuImage();
 	}
 
 	/**
@@ -35,7 +35,7 @@ public class ChinaCaipuMain {
 	 * 
 	 * @throws Exception
 	 */
-	static void getCaipuImage() throws Exception {
+	static void handleCaipuImage() throws Exception {
 
 		IImageHandler iHandlerImg = CaiImageFactory.getIHandlerImg();
 		List<Cai> all = iHandlerImg.findAllCai();
