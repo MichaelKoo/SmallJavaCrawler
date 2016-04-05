@@ -3,7 +3,10 @@ package com.china.caipu.img;
 import java.io.InputStream;
 import java.util.List;
 
+import com.china.caipu.net.NetFactory;
+import com.china.caipu.util.db.DBCaiListUtil;
 import com.china.caipu.vo.Cai;
+import com.mk.IsUtil;
 
 /**
  * real implement
@@ -12,7 +15,11 @@ import com.china.caipu.vo.Cai;
  * 
  *         2016-4-4
  */
-final class IHandlerImgImpl implements IHandlerImg {
+public final class IImageHandlerImpl implements IImageHandler {
+
+	public IImageHandlerImpl() {
+
+	}
 
 	/*
 	 * find all cai from DB
@@ -24,7 +31,7 @@ final class IHandlerImgImpl implements IHandlerImg {
 	@Override
 	public List<Cai> findAllCai() throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return DBCaiListUtil.findAllCai();
 	}
 
 	/*
@@ -37,7 +44,11 @@ final class IHandlerImgImpl implements IHandlerImg {
 	@Override
 	public InputStream downLoadImage(String url) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		if (IsUtil.isNull(url)) {
+			throw new NullPointerException(" url is null");
+		}
+
+		return NetFactory.getINetHandler().doGet(url, null);
 	}
 
 	/*

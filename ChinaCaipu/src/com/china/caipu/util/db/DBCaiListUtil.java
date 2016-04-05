@@ -140,11 +140,10 @@ public final class DBCaiListUtil {
 			sb.append(" WHERE ");
 			sb.append(CPField.NAME);
 			sb.append("=?");
-			
 
 			psmt = conn.prepareStatement(sb.toString());
 			psmt.setString(1, name);
-			
+
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				Cai cai = new Cai();
@@ -175,9 +174,7 @@ public final class DBCaiListUtil {
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT ");
-		sb.append(CPField.NAME);
-		sb.append(",");
-		sb.append(CPField.DETAIL);
+		sb.append(Config.ALL);
 		sb.append(" FROM ");
 		sb.append(TABLE);
 
@@ -187,7 +184,10 @@ public final class DBCaiListUtil {
 		while (rs.next()) {
 			Cai cai = new Cai();
 			cai.mName = rs.getString(1);
-			cai.mDetail = rs.getString(2);
+			cai.mDescrip = rs.getString(2);
+			cai.mImage = rs.getString(3);
+			cai.mDetail = rs.getString(4);
+
 			result.add(cai);
 		}
 

@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import com.china.caipu.img.CaiImageFactory;
+import com.china.caipu.img.IImageHandler;
 import com.china.caipu.util.ChinaCaipu;
 import com.china.caipu.util.db.DBCaiDetailUtil;
 import com.china.caipu.util.db.DBCaiListUtil;
@@ -22,7 +23,7 @@ import com.mk.log.LOG;
 public class ChinaCaipuMain {
 
 	public static void main(String[] args) throws Exception {
-
+		getCaipuImage();
 	}
 
 	/**
@@ -35,15 +36,20 @@ public class ChinaCaipuMain {
 	 * @throws Exception
 	 */
 	static void getCaipuImage() throws Exception {
-		CaiImageFactory factory = CaiImageFactory.getInstance();
-		List<Cai> all = factory.findAllCai();
+
+		IImageHandler iHandlerImg = CaiImageFactory.getIHandlerImg();
+		List<Cai> all = iHandlerImg.findAllCai();
+
 		for (Cai cai : all) {
-			InputStream input = factory.downLoadImage(cai.mImage);
-			String path = factory.saveImage(input);
+			InputStream input = iHandlerImg.downLoadImage(cai.mImage);
+			String path = iHandlerImg.saveImage(input);
+
 			LOG.D(cai.mName + "<---->" + path);
+
 			if (input != null) {
 				input.close();
 			}
+			break;
 		}
 		LOG.D("task over");
 	}

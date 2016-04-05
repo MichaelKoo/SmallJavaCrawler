@@ -11,7 +11,7 @@ import com.china.caipu.vo.Cai;
  * 
  *         2016-4-4
  */
-public interface IHandlerImg {
+public interface IImageHandler {
 
 	/**
 	 * 

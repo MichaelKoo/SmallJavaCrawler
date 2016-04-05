@@ -8,9 +8,8 @@ import java.sql.Connection;
  * 
  *         2016-3-26
  */
-public abstract class AbstractConn {
+abstract class AbstractConn {
 
-	
 	/**
 	 * 
 	 * @return
