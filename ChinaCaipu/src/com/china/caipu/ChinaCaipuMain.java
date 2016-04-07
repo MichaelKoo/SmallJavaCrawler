@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.china.caipu.img.CaiImageFactory;
 import com.china.caipu.img.IImageHandler;
+import com.china.caipu.list.IListHandler;
+import com.china.caipu.list.ListHandlerFactory;
 import com.china.caipu.util.ChinaCaipu;
 import com.china.caipu.util.Util;
 import com.china.caipu.util.db.DBCaiDetailUtil;
@@ -26,8 +28,9 @@ import com.mk.log.LOG;
 public class ChinaCaipuMain {
 
 	public static void main(String[] args) throws Exception {
-
-		handleCaipuImage();
+		
+		handleCaipuList();
+		
 	}
 
 	static String[] testImage = {
@@ -71,6 +74,33 @@ public class ChinaCaipuMain {
 		}
 
 		LOG.D("task over");
+	}
+
+	/**
+	 * 
+	 * @throws Exception
+	 */
+	static void handleCaipuList() throws Exception {
+		IListHandler listHandler = ListHandlerFactory.getIListHandler();
+		
+		for (int page = 5; page < 13; page++) {
+			//1
+			String url = listHandler.genUrl(page);
+			//2
+			String data = listHandler.getContent(url);
+			//3
+			List<Cai> caiList = listHandler.parseContent(data);
+			
+			//4
+			for (Cai cai : caiList) {
+				boolean result = listHandler.saveContent(cai);
+				LOG.D(cai.mName + "<--->" + result);
+			}
+			LOG.D("<--page--->" + page + "  is over");
+
+			Thread.sleep(genSleep());
+		}
+		LOG.D("handleCaipuList   -->task over");
 	}
 
 	/**
@@ -154,6 +184,7 @@ public class ChinaCaipuMain {
 	}
 
 	/**
+	 * random sleep time
 	 * 
 	 * @return
 	 */

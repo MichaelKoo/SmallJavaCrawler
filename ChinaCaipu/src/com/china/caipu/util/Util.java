@@ -18,6 +18,24 @@ import com.mk.log.LOG;
  *         2016-4-5
  */
 public final class Util {
+
+	/**
+	 * 
+	 * @param packageName
+	 * @param fileName
+	 * @return
+	 */
+	public static String genPath(String packageName, String fileName) {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("/");
+		sb.append(packageName.replace(".", "/"));
+		sb.append("/");
+		sb.append(fileName);
+
+		return sb.toString();
+	}
+
 	/**
 	 * 
 	 * @param name
@@ -54,8 +72,9 @@ public final class Util {
 		while ((tmp = br.readLine()) != null) {
 			sb.append(tmp);
 		}
-		input.close();
-
+		if (input != null) {
+			input.close();
+		}
 		return sb.toString();
 	}
 

@@ -1,14 +1,11 @@
 package com.china.caipu.util;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-import com.china.caipu.constant.Config;
 import com.china.caipu.vo.Cai;
 import com.mk.util.MKUtils;
 
@@ -88,23 +85,6 @@ public final class LocalAbstractData extends AbstractData {
 	}
 
 	/**
-	 * 
-	 * @param packageName
-	 * @param fileName
-	 * @return
-	 */
-	private static String genPath(String packageName, String fileName) {
-
-		StringBuilder sb = new StringBuilder();
-		sb.append("/");
-		sb.append(packageName.replace(".", "/"));
-		sb.append("/");
-		sb.append(fileName);
-
-		return sb.toString();
-	}
-
-	/**
 	 * args[0]=pathName,args[1]=append,args[2]=data;
 	 * 
 	 * @param cai
@@ -137,17 +117,9 @@ public final class LocalAbstractData extends AbstractData {
 	public String getContent(Object obj, Object... args) throws Exception {
 		// TODO Auto-generated method stub
 		Class<?> cls = (Class<?>) obj;
-		InputStream input = cls.getResourceAsStream(genPath(args[0].toString(),
-				args[1].toString()));
-		BufferedReader reader = new BufferedReader(new InputStreamReader(input,
-				Config.CHARSET), 16 * 1024);
-		StringBuffer sb = new StringBuffer();
-		String tmp = null;
-		while ((tmp = reader.readLine()) != null) {
-			sb.append(tmp);
-		}
-		input.close();
-		return sb.toString();
+		InputStream input = cls.getResourceAsStream(Util.genPath(
+				args[0].toString(), args[1].toString()));
+		return Util.stream2String(input);
 	}
 
 }// end
