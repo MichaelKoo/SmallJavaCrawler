@@ -31,9 +31,10 @@ public interface IImageHandler {
 	/**
 	 * @param input
 	 *            image inputStream
+	 * @param name
 	 * @return
 	 * @throws Exception
 	 */
-	public String saveImage(InputStream input) throws Exception;
+	public String saveImage(String name, InputStream input) throws Exception;
 
 }// end

@@ -5,11 +5,11 @@ import java.sql.DriverManager;
 
 /**
  * 
- * @author {Michael Koo ,Email:MK520VIP@163.com}
+ * @author {Mark Sir}
  * 
- *         2016-3-26
+ *         2016-4-7
  */
-public class JDBCConn extends AbstractConn {
+public final class JDBCConn extends AbstractConn {
 
 	private static final String URL = "jdbc:mysql://localhost:3306/chinacaipu?useSSL=false";
 	private static final String USER = "root";

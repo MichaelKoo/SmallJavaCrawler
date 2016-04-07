@@ -1,11 +1,11 @@
 package com.china.caipu;
 
-import java.io.InputStream;
 import java.util.List;
 
 import com.china.caipu.img.CaiImageFactory;
 import com.china.caipu.img.IImageHandler;
 import com.china.caipu.util.ChinaCaipu;
+import com.china.caipu.util.Util;
 import com.china.caipu.util.db.DBCaiDetailUtil;
 import com.china.caipu.util.db.DBCaiListUtil;
 import com.china.caipu.util.parser.CaipuDetailParser;
@@ -16,6 +16,9 @@ import com.mk.log.LOG;
 
 /**
  * 
+ * 
+ * 
+ * 
  * @author {Mark Sir}
  * 
  *         2016-3-31
@@ -23,8 +26,18 @@ import com.mk.log.LOG;
 public class ChinaCaipuMain {
 
 	public static void main(String[] args) throws Exception {
+
 		handleCaipuImage();
 	}
+
+	static String[] testImage = {
+			"http://img.ugirls.com/uploads/magazine/content/aee3f9eb0d5f003d607cc8130875a393_magazine_web_m.jpg",
+			"http://d.hiphotos.baidu.com/image/pic/item/1f178a82b9014a90b559c9faae773912b31bee16.jpg",
+			"http://e.hiphotos.baidu.com/image/pic/item/e7cd7b899e510fb34395d1c3de33c895d0430cd1.jpg",
+			"http://f.hiphotos.baidu.com/image/pic/item/242dd42a2834349bbe78c852cdea15ce37d3beef.jpg",
+			"http://h.hiphotos.baidu.com/image/pic/item/3812b31bb051f819f1bab90cdfb44aed2f73e7dd.jpg"
+	//
+	};
 
 	/**
 	 * 1°¢’“µΩÕº∆¨µÿ÷∑£ª
@@ -37,20 +50,26 @@ public class ChinaCaipuMain {
 	 */
 	static void handleCaipuImage() throws Exception {
 
-		IImageHandler iHandlerImg = CaiImageFactory.getIHandlerImg();
-		List<Cai> all = iHandlerImg.findAllCai();
+		IImageHandler iImageHandler = CaiImageFactory.getIHandlerImg();
+		List<Cai> all = iImageHandler.findAllCai();
 
 		for (Cai cai : all) {
-			InputStream input = iHandlerImg.downLoadImage(cai.mImage);
-			String path = iHandlerImg.saveImage(input);
+			String imageName = Util.getImageName(cai.mImage);
 
-			LOG.D(cai.mName + "<---->" + path);
-
-			if (input != null) {
-				input.close();
+			if (!Util.isExists(imageName)) {
+				// InputStream input = iImageHandler.downLoadImage(cai.mImage);
+				// String path = iImageHandler.saveImage(imageName, input);
+				//
+				// LOG.D("<---->" + path);
+				// if (input != null) {
+				// input.close();
+				// }
+				// Thread.sleep(genSleep());
+				LOG.D("" + cai.mName);
 			}
-			break;
+
 		}
+
 		LOG.D("task over");
 	}
 
@@ -109,7 +128,6 @@ public class ChinaCaipuMain {
 
 			//
 			Thread.sleep(genSleep());
-
 		}
 
 		LOG.D("   task over  ");
@@ -130,12 +148,9 @@ public class ChinaCaipuMain {
 		CaiDetail caipu = CaipuDetailParser.parseDetail(data);
 
 		if (IsUtil.isNotNull(caipu)) {
-
 			boolean result = DBCaiDetailUtil.addCaiDetail(caipu);
 			LOG.D("over : " + detail + ":  -->" + result);
-
 		}
-
 	}
 
 	/**
@@ -143,7 +158,7 @@ public class ChinaCaipuMain {
 	 * @return
 	 */
 	static long genSleep() {
-		long time = (long) (Math.random() * 9) + 6;
+		long time = (long) (Math.random() * 9) + 5;
 		time = time * 1000;
 		return time;
 	}

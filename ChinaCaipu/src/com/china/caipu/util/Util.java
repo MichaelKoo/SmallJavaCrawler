@@ -1,6 +1,7 @@
 package com.china.caipu.util;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Iterator;
@@ -10,7 +11,33 @@ import java.util.Map;
 import com.china.caipu.constant.Config;
 import com.mk.log.LOG;
 
+/**
+ * 
+ * @author {Mark Sir}
+ * 
+ *         2016-4-5
+ */
 public final class Util {
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public static boolean isExists(String name) {
+		File file = new File(PathUtil.getImagePath() + name);
+		return file.exists();
+	}
+
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
+	public static String getImageName(String url) {
+		int beginIndex = url.lastIndexOf("/");
+		String name = url.substring(beginIndex, url.length());
+		return name;
+	}
 
 	/**
 	 * 

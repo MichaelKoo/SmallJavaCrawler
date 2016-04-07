@@ -67,7 +67,7 @@ final class NetHandlerImpl implements INetHandler {
 
 		//
 		InputStream input = conn.getInputStream();
-		conn.disconnect();
+		// conn.disconnect();
 
 		return input;
 	}
