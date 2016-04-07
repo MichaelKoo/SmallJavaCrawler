@@ -15,6 +15,7 @@ import com.china.caipu.vo.Cai;
 import com.china.caipu.vo.CaiDetail;
 import com.mk.IsUtil;
 import com.mk.log.LOG;
+import com.mk.util.MKUtils;
 
 /**
  * 
@@ -28,9 +29,9 @@ import com.mk.log.LOG;
 public class ChinaCaipuMain {
 
 	public static void main(String[] args) throws Exception {
-		
+
 		handleCaipuList();
-		
+
 	}
 
 	static String[] testImage = {
@@ -67,7 +68,7 @@ public class ChinaCaipuMain {
 				// if (input != null) {
 				// input.close();
 				// }
-				// Thread.sleep(genSleep());
+				// Thread.sleep(MKUtils.genSleep());
 				LOG.D("" + cai.mName);
 			}
 
@@ -82,23 +83,23 @@ public class ChinaCaipuMain {
 	 */
 	static void handleCaipuList() throws Exception {
 		IListHandler listHandler = ListHandlerFactory.getIListHandler();
-		
+
 		for (int page = 5; page < 13; page++) {
-			//1
+			// 1
 			String url = listHandler.genUrl(page);
-			//2
+			// 2
 			String data = listHandler.getContent(url);
-			//3
+			// 3
 			List<Cai> caiList = listHandler.parseContent(data);
-			
-			//4
+
+			// 4
 			for (Cai cai : caiList) {
 				boolean result = listHandler.saveContent(cai);
 				LOG.D(cai.mName + "<--->" + result);
 			}
 			LOG.D("<--page--->" + page + "  is over");
 
-			Thread.sleep(genSleep());
+			Thread.sleep(MKUtils.genSleep());
 		}
 		LOG.D("handleCaipuList   -->task over");
 	}
@@ -127,7 +128,7 @@ public class ChinaCaipuMain {
 				LOG.D(cai.mName + "=over=" + result);
 			}
 			//
-			Thread.sleep(genSleep());
+			Thread.sleep(MKUtils.genSleep());
 		}
 
 		LOG.D("over");
@@ -157,7 +158,7 @@ public class ChinaCaipuMain {
 			handleCaipuDetail(cai.mDetail, isLocal);
 
 			//
-			Thread.sleep(genSleep());
+			Thread.sleep(MKUtils.genSleep());
 		}
 
 		LOG.D("   task over  ");
@@ -183,14 +184,4 @@ public class ChinaCaipuMain {
 		}
 	}
 
-	/**
-	 * random sleep time
-	 * 
-	 * @return
-	 */
-	static long genSleep() {
-		long time = (long) (Math.random() * 9) + 5;
-		time = time * 1000;
-		return time;
-	}
 }// end
