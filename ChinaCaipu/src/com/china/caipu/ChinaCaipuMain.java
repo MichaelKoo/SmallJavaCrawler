@@ -6,7 +6,6 @@ import com.china.caipu.img.CaiImageFactory;
 import com.china.caipu.img.IImageHandler;
 import com.china.caipu.list.IListHandler;
 import com.china.caipu.list.ListHandlerFactory;
-import com.china.caipu.util.ChinaCaipu;
 import com.china.caipu.util.RemoteUtil;
 import com.china.caipu.util.Util;
 import com.china.caipu.util.db.DBCaiDetailUtil;
@@ -34,6 +33,33 @@ public class ChinaCaipuMain {
 		// handleCaipuList();
 		getCaipuDetail();
 
+	}
+
+	/**
+	 * 
+	 * @throws Exception
+	 */
+	static void handleCaipuList() throws Exception {
+		IListHandler listHandler = ListHandlerFactory.getIListHandler();
+
+		for (int page = 5; page < 13; page++) {
+			// 1
+			String url = listHandler.genUrl(page);
+			// 2
+			String data = listHandler.getContent(url);
+			// 3
+			List<Cai> caiList = listHandler.parseContent(data);
+
+			// 4
+			for (Cai cai : caiList) {
+				boolean result = listHandler.saveContent(cai);
+				LOG.D(cai.mName + "<--->" + result);
+			}
+			LOG.D("<--page--->" + page + "  is over");
+
+			Thread.sleep(MKUtils.genSleep());
+		}
+		LOG.D("handleCaipuList   -->task over");
 	}
 
 	static String[] testImage = {
@@ -80,63 +106,6 @@ public class ChinaCaipuMain {
 	}
 
 	/**
-	 * 
-	 * @throws Exception
-	 */
-	static void handleCaipuList() throws Exception {
-		IListHandler listHandler = ListHandlerFactory.getIListHandler();
-
-		for (int page = 5; page < 13; page++) {
-			// 1
-			String url = listHandler.genUrl(page);
-			// 2
-			String data = listHandler.getContent(url);
-			// 3
-			List<Cai> caiList = listHandler.parseContent(data);
-
-			// 4
-			for (Cai cai : caiList) {
-				boolean result = listHandler.saveContent(cai);
-				LOG.D(cai.mName + "<--->" + result);
-			}
-			LOG.D("<--page--->" + page + "  is over");
-
-			Thread.sleep(MKUtils.genSleep());
-		}
-		LOG.D("handleCaipuList   -->task over");
-	}
-
-	/**
-	 * 解析列表页
-	 * 
-	 * @throws Exception
-	 */
-	static void getCaipuList() throws Exception {
-		boolean isLocal = false;
-		for (int in = 11; in < 12; in++) {
-			// 1、获取URL
-			String url = ChinaCaipu.genUrl(in);
-
-			// 2、获取网页内容
-			String data = ChinaCaipu.getInstance(isLocal).getCaipuContent(url);
-
-			// 3、解析网页内容
-			List<Cai> datas = ChinaCaipu.getInstance(isLocal).parseList(data);
-
-			// 4、存储内容
-			for (Cai cai : datas) {
-				boolean result = ChinaCaipu.getInstance(isLocal)
-						.saveCaipuContent(cai);
-				LOG.D(cai.mName + "=over=" + result);
-			}
-			//
-			Thread.sleep(MKUtils.genSleep());
-		}
-
-		LOG.D("over");
-	}
-
-	/**
 	 * 1.从数据库读取连接，
 	 * 
 	 * 2.根据连接获取内容；
@@ -151,7 +120,7 @@ public class ChinaCaipuMain {
 
 		List<Cai> dataList = DBCaiListUtil.findAllCai();
 		int count = dataList.size();
-		int time=0;
+		int time = 0;
 
 		for (int in = count - 1; in >= 0; in--) {
 			Cai cai = dataList.get(in);
@@ -162,7 +131,7 @@ public class ChinaCaipuMain {
 				Thread.sleep(MKUtils.genSleep());
 			} else {
 				time++;
-				LOG.D(cai.mName + "<---> is exists->>"+time);
+				LOG.D(cai.mName + "<---> is exists->>" + time);
 			}
 		}
 

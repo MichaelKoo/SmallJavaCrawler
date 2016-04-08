@@ -9,11 +9,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.china.caipu.util.ChinaCaipu;
 import com.china.caipu.vo.Cai;
 import com.china.caipu.vo.CaiDetail;
 import com.mk.IsUtil;
-import com.mk.log.LOG;
 
 /**
  * 
@@ -22,8 +20,6 @@ import com.mk.log.LOG;
  *         2016-3-31
  */
 public final class DBCaiDetailUtil {
-
- 
 
 	private static final String TABLE = " detail ";
 
