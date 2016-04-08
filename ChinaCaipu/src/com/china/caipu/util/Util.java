@@ -37,11 +37,12 @@ public final class Util {
 	}
 
 	/**
+	 * is exists image
 	 * 
 	 * @param name
 	 * @return
 	 */
-	public static boolean isExists(String name) {
+	public static boolean isExistsImage(String name) {
 		File file = new File(PathUtil.getImagePath() + name);
 		return file.exists();
 	}

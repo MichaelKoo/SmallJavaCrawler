@@ -60,7 +60,7 @@ public class ChinaCaipuMain {
 		for (Cai cai : all) {
 			String imageName = Util.getImageName(cai.mImage);
 
-			if (!Util.isExists(imageName)) {
+			if (!Util.isExistsImage(imageName)) {
 				// InputStream input = iImageHandler.downLoadImage(cai.mImage);
 				// String path = iImageHandler.saveImage(imageName, input);
 				//
