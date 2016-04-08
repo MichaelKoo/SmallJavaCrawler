@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.china.caipu.constant.Config;
+import com.mk.IsUtil;
 import com.mk.log.LOG;
 
 /**
@@ -65,11 +65,18 @@ public final class Util {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String stream2String(InputStream input) throws Exception {
+	public static String stream2String(InputStream input, String charsetName)
+			throws Exception {
 		StringBuffer sb = new StringBuffer();
 		String tmp = null;
-		BufferedReader br = new BufferedReader(new InputStreamReader(input,
-				Config.CHARSET), 16 * 1024);
+		BufferedReader br = null;
+		if (IsUtil.isNotNull(charsetName)) {
+			br = new BufferedReader(new InputStreamReader(input, charsetName),
+					16 * 1024);
+		} else {
+			new BufferedReader(new InputStreamReader(input), 16 * 1024);
+		}
+
 		while ((tmp = br.readLine()) != null) {
 			sb.append(tmp);
 		}

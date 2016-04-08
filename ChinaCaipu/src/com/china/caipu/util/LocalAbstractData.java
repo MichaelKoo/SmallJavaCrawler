@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 
+import com.china.caipu.constant.Config;
 import com.china.caipu.vo.Cai;
 import com.mk.util.MKUtils;
 
@@ -119,7 +120,7 @@ public final class LocalAbstractData extends AbstractData {
 		Class<?> cls = (Class<?>) obj;
 		InputStream input = cls.getResourceAsStream(Util.genPath(
 				args[0].toString(), args[1].toString()));
-		return Util.stream2String(input);
+		return Util.stream2String(input, Config.CHARSET);
 	}
 
 }// end

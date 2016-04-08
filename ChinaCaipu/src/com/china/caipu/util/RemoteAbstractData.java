@@ -47,7 +47,7 @@ public final class RemoteAbstractData extends AbstractData {
 		conn.connect();
 
 		InputStream input = conn.getInputStream();
-		String result = Util.stream2String(input);
+		String result = Util.stream2String(input, Config.CHARSET);
 
 		input.close();
 		conn.disconnect();
