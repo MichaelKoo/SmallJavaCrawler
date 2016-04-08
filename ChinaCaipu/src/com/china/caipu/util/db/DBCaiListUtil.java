@@ -61,9 +61,9 @@ public final class DBCaiListUtil {
 			return false;
 		}
 
-		Connection conn = ConnUtil.getConnection();
-
 		if (!findIsExists(cai.mName)) {
+			Connection conn = ConnUtil.getConnection();
+
 			StringBuilder sb = new StringBuilder();
 			sb.append("INSERT INTO ");
 			sb.append(TABLE);

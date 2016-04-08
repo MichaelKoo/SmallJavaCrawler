@@ -3,9 +3,6 @@ package com.china.caipu.list;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +12,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.china.caipu.constant.Config;
-import com.china.caipu.util.db.ConnUtil;
+import com.china.caipu.util.db.DBCaiListUtil;
 import com.china.caipu.vo.Cai;
 import com.mk.log.LOG;
 import com.mk.util.MKUtils;
@@ -114,13 +111,13 @@ final class ListHandlerImpl implements IListHandler {
 		// String third =
 		// "http://www.chinacaipu.com/menu/guangdongecai/index_3.html";
 
-		String pre = "http://www.chinacaipu.com/menu/guangdongecai/";
+		String pre = Config.URL_PRE;
 		if (index == 0) {
 			return pre;
-		} else {
-			pre += "index_" + (index + 1) + ".html";
-			return pre;
 		}
+
+		pre += "index_" + (index + 1) + ".html";
+		return pre;
 
 	}
 
@@ -236,48 +233,7 @@ final class ListHandlerImpl implements IListHandler {
 	@Override
 	public boolean saveContent(Cai cai) throws Exception {
 		// TODO Auto-generated method stub
-		return saveContentDB(cai);
-	}
-
-	static boolean saveContentDB(Cai cai) throws Exception {
-		if (isExistsCai(cai.mName)) {
-			return false;
-		}
-		Connection conn = ConnUtil.getConnection();
-		StringBuffer sql = new StringBuffer();
-		sql.append("INSERT INTO test (name,image,descrip,detail) VALUES (?,?,?,?)");
-
-		PreparedStatement psmt = conn.prepareStatement(sql.toString());
-		psmt.setString(1, cai.mName);
-		psmt.setString(2, cai.mImage);
-		psmt.setString(3, cai.mDescrip);
-		psmt.setString(4, cai.mDetail);
-		boolean result = psmt.executeUpdate() == 1;
-
-		psmt.close();
-		conn.close();
-
-		return result;
-	}
-
-	static boolean isExistsCai(String name) throws Exception {
-		Connection conn = ConnUtil.getConnection();
-		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT * FROM test WHERE name=?");
-
-		PreparedStatement psmt = conn.prepareStatement(sql.toString());
-		psmt.setString(1, name);
-
-		ResultSet rs = psmt.executeQuery();
-		boolean result = false;
-		if (rs.next()) {
-			result = true;
-		}
-		rs.close();
-		psmt.close();
-		conn.close();
-
-		return result;
+		return DBCaiListUtil.addCai(cai);
 	}
 
 }// end

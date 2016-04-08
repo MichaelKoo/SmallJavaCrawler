@@ -15,22 +15,7 @@ import com.mk.log.LOG;
  */
 public final class Util {
 
-	/**
-	 * 
-	 * @param packageName
-	 * @param fileName
-	 * @return
-	 */
-	public static String genPath(String packageName, String fileName) {
-
-		StringBuilder sb = new StringBuilder();
-		sb.append("/");
-		sb.append(packageName.replace(".", "/"));
-		sb.append("/");
-		sb.append(fileName);
-
-		return sb.toString();
-	}
+	
 
 	/**
 	 * is exists image
