@@ -7,6 +7,7 @@ import com.china.caipu.img.IImageHandler;
 import com.china.caipu.list.IListHandler;
 import com.china.caipu.list.ListHandlerFactory;
 import com.china.caipu.util.ChinaCaipu;
+import com.china.caipu.util.RemoteUtil;
 import com.china.caipu.util.Util;
 import com.china.caipu.util.db.DBCaiDetailUtil;
 import com.china.caipu.util.db.DBCaiListUtil;
@@ -150,12 +151,10 @@ public class ChinaCaipuMain {
 		List<Cai> dataList = DBCaiListUtil.findAllCai();
 		int count = dataList.size();
 
-		boolean isLocal = false;
-
 		for (int in = count - 1 - 100; in >= 0; in--) {
 			Cai cai = dataList.get(in);
 
-			handleCaipuDetail(cai.mDetail, isLocal);
+			handleCaipuDetail(cai.mDetail);
 
 			//
 			Thread.sleep(MKUtils.genSleep());
@@ -170,11 +169,9 @@ public class ChinaCaipuMain {
 	 * @param isLocal
 	 * @throws Exception
 	 */
-	static void handleCaipuDetail(String detail, boolean isLocal)
-			throws Exception {
+	static void handleCaipuDetail(String detail) throws Exception {
 
-		String data = ChinaCaipu.getInstance(isLocal).getCaipuRemoteContent(
-				detail);
+		String data = RemoteUtil.getRemoteContent(detail);
 
 		CaiDetail caipu = CaipuDetailParser.parseDetail(data);
 
