@@ -23,18 +23,7 @@ import com.mk.log.LOG;
  */
 public final class DBCaiDetailUtil {
 
-	public static class Test {
-
-		public static void main(String[] args) throws Exception {
-
-			List<Cai> data = DBCaiDetailUtil.findAllCaiByName("XOœÃ»‚Ù’");
-			// String path = ChinaCaipu.saveLocal(data.get(0).mDetail,
-			// "D://test.html", false);
-			String path = ChinaCaipu.getInstance(false).saveCaipuContent(null,
-					"D://DbCaiDetailTest.html", false, data.get(0).mDetail);
-			LOG.D("test result:" + path);
-		}
-	}
+ 
 
 	private static final String TABLE = " detail ";
 
