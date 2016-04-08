@@ -120,7 +120,7 @@ public final class LocalAbstractData extends AbstractData {
 		Class<?> cls = (Class<?>) obj;
 		InputStream input = cls.getResourceAsStream(Util.genPath(
 				args[0].toString(), args[1].toString()));
-		return Util.stream2String(input, Config.CHARSET);
+		return MKUtils.stream2String(input, Config.CHARSET);
 	}
 
 }// end

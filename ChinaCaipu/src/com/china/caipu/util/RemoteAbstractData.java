@@ -9,6 +9,7 @@ import com.china.caipu.constant.Config;
 import com.china.caipu.util.db.DBCaiListUtil;
 import com.china.caipu.vo.Cai;
 import com.mk.log.LOG;
+import com.mk.util.MKUtils;
 
 /**
  * 
@@ -47,7 +48,7 @@ public final class RemoteAbstractData extends AbstractData {
 		conn.connect();
 
 		InputStream input = conn.getInputStream();
-		String result = Util.stream2String(input, Config.CHARSET);
+		String result = MKUtils.stream2String(input, Config.CHARSET);
 
 		input.close();
 		conn.disconnect();

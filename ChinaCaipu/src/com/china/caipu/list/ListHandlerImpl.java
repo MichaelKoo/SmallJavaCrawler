@@ -15,10 +15,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.china.caipu.constant.Config;
-import com.china.caipu.util.Util;
 import com.china.caipu.util.db.ConnUtil;
 import com.china.caipu.vo.Cai;
 import com.mk.log.LOG;
+import com.mk.util.MKUtils;
 
 /**
  * 
@@ -141,7 +141,7 @@ final class ListHandlerImpl implements IListHandler {
 			throws Exception {
 		String result = null;
 		InputStream input = cls.getResourceAsStream(fileName);
-		result = Util.stream2String(input, Config.CHARSET);
+		result = MKUtils.stream2String(input, Config.CHARSET);
 		input.close();
 
 		return result;
@@ -156,7 +156,7 @@ final class ListHandlerImpl implements IListHandler {
 
 		InputStream input = conn.getInputStream();
 		// 需要有InputStream 转为String的方法
-		result = Util.stream2String(input, Config.CHARSET);
+		result = MKUtils.stream2String(input, Config.CHARSET);
 
 		input.close();
 		conn.disconnect();
