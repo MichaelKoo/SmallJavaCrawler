@@ -18,7 +18,11 @@ import com.mk.log.LOG;
 import com.mk.util.MKUtils;
 
 /**
+ * 1、获取菜谱列表内容；
  * 
+ * 2、获取菜谱详细信息；
+ * 
+ * 3、获取菜谱主图；
  * 
  * 
  * 

@@ -80,7 +80,8 @@ final class ListHandlerImpl implements IListHandler {
 	static String testGetContent(ListHandlerImpl impl, String url)
 			throws Exception {
 		// String content = impl.getContent(url);
-		String content = getContentFromLocal(impl.getClass(), "sample1.html");
+		String content = MKUtils.getContentFromPackage(impl.getClass(),
+				"sample1.html", Config.CHARSET);
 
 		// log(content);
 		return content;
@@ -88,7 +89,8 @@ final class ListHandlerImpl implements IListHandler {
 
 	static void testGetContentFromLocal() throws Exception {
 		Class<?> cls = ListHandlerImpl.class;
-		String data = getContentFromLocal(cls, "sample1.html");
+		String data = MKUtils.getContentFromPackage(cls, "sample1.html",
+				Config.CHARSET);
 		log(data);
 	}
 
@@ -132,16 +134,6 @@ final class ListHandlerImpl implements IListHandler {
 	public String getContent(String url) throws Exception {
 		// TODO Auto-generated method stub
 		return getContentFromRemote(url);
-	}
-
-	static String getContentFromLocal(Class<?> cls, String fileName)
-			throws Exception {
-		String result = null;
-		InputStream input = cls.getResourceAsStream(fileName);
-		result = MKUtils.stream2String(input, Config.CHARSET);
-		input.close();
-
-		return result;
 	}
 
 	static String getContentFromRemote(String url) throws Exception {
