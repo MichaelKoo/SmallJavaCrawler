@@ -31,7 +31,8 @@ public class ChinaCaipuMain {
 
 	public static void main(String[] args) throws Exception {
 
-		handleCaipuList();
+		// handleCaipuList();
+		getCaipuDetail();
 
 	}
 
@@ -150,14 +151,19 @@ public class ChinaCaipuMain {
 
 		List<Cai> dataList = DBCaiListUtil.findAllCai();
 		int count = dataList.size();
+		int time=0;
 
-		for (int in = count - 1 - 100; in >= 0; in--) {
+		for (int in = count - 1; in >= 0; in--) {
 			Cai cai = dataList.get(in);
-
-			handleCaipuDetail(cai.mDetail);
-
 			//
-			Thread.sleep(MKUtils.genSleep());
+			if (!DBCaiDetailUtil.findIsExists(cai.mName)) {
+				handleCaipuDetail(cai.mDetail);
+				//
+				Thread.sleep(MKUtils.genSleep());
+			} else {
+				time++;
+				LOG.D(cai.mName + "<---> is exists->>"+time);
+			}
 		}
 
 		LOG.D("   task over  ");
@@ -166,7 +172,7 @@ public class ChinaCaipuMain {
 	/**
 	 * 
 	 * @param detail
-	 * @param isLocal
+	 *            detail url
 	 * @throws Exception
 	 */
 	static void handleCaipuDetail(String detail) throws Exception {
