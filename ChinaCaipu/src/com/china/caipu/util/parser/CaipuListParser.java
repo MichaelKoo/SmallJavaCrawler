@@ -52,6 +52,7 @@ public final class CaipuListParser {
 								cai.mDetail = divChild.attr("href");
 							}
 							if (divChild.hasAttr("alt")
+									&& divChild.hasAttr("src")
 									&& "img".equals(divChild.nodeName())) {
 								// image
 								cai.mImage = divChild.attr("src");
@@ -72,7 +73,7 @@ public final class CaipuListParser {
 					if (cai.mName == null && ele.hasAttr("class")
 							&& "h3".equals(ele.nodeName())) {
 						Element child = ele.child(0);
-						cai.mName = child.attr("title");
+						cai.mName = child.text();
 					}
 				}
 

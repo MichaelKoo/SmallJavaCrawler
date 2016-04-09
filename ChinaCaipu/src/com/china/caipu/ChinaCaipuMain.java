@@ -18,11 +18,11 @@ import com.mk.log.LOG;
 import com.mk.util.MKUtils;
 
 /**
- * 1、获取菜谱列表内容；
+ * 1、get the food menu list；
  * 
- * 2、获取菜谱详细信息；
+ * 2、get the food detail；
  * 
- * 3、获取菜谱主图；
+ * 3、get the food list image；
  * 
  * 
  * 
@@ -34,19 +34,19 @@ public class ChinaCaipuMain {
 
 	public static void main(String[] args) throws Exception {
 
-		// handleCaipuList();
-		getCaipuDetail();
+		handleCaipuList();
 
 	}
 
 	/**
+	 * is OK 4-9
 	 * 
 	 * @throws Exception
 	 */
 	static void handleCaipuList() throws Exception {
 		IListHandler listHandler = ListHandlerFactory.getIListHandler();
 
-		for (int page = 5; page < 13; page++) {
+		for (int page = 7; page < 8; page++) {
 			// 1
 			String url = listHandler.genUrl(page);
 			// 2

@@ -1,18 +1,11 @@
 package com.china.caipu.list;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
 import com.china.caipu.constant.Config;
+import com.china.caipu.util.RemoteUtil;
 import com.china.caipu.util.db.DBCaiListUtil;
+import com.china.caipu.util.parser.CaipuListParser;
 import com.china.caipu.vo.Cai;
 import com.mk.log.LOG;
 import com.mk.util.MKUtils;
@@ -133,25 +126,7 @@ final class ListHandlerImpl implements IListHandler {
 	@Override
 	public String getContent(String url) throws Exception {
 		// TODO Auto-generated method stub
-		return getContentFromRemote(url);
-	}
-
-	static String getContentFromRemote(String url) throws Exception {
-		String result = null;
-		URL mURL = new URL(url);
-		HttpURLConnection conn = (HttpURLConnection) mURL.openConnection();
-
-		conn.connect();
-
-		InputStream input = conn.getInputStream();
-		// 需要有InputStream 转为String的方法
-		result = MKUtils.stream2String(input, Config.CHARSET);
-
-		input.close();
-		conn.disconnect();
-		conn = null;
-
-		return result;
+		return RemoteUtil.getRemoteContent(url);
 	}
 
 	/**
@@ -160,58 +135,8 @@ final class ListHandlerImpl implements IListHandler {
 	@Override
 	public List<Cai> parseContent(String data) throws Exception {
 		// TODO Auto-generated method stub
-		Document doc = Jsoup.parse(data);
-		Elements w660Eles = doc.getElementsByClass("w660");
-		Element w660Child = w660Eles.first();
-		Elements childs = w660Child.children();
-		Element c_con3Ele = childs.get(1);
-		Elements c_con3Childs = c_con3Ele.children();
 
-		//
-		List<Cai> result = new ArrayList<Cai>();
-		for (Element cCon3 : c_con3Childs) {
-			if (cCon3.hasClass("c_conlist")) {
-				Elements c_conlist = cCon3.children();
-				for (Element cConListChild : c_conlist) {
-					// li
-					Cai cai = new Cai();
-					Elements liChilds = cConListChild.children();
-					for (Element liChildren : liChilds) {
-
-						// descrip
-						if (liChildren.nodeName().equals("font")
-								&& liChildren.hasAttr("style")) {
-							String descrip = liChildren.text();
-							descrip = descrip.replace("......", "");
-							// log(descrip);
-							cai.mDescrip = descrip;
-						}
-
-						// image
-						if (liChildren.nodeName().equals("div")
-								&& liChildren.hasClass("pic")) {
-							String image = liChildren.child(0).child(0)
-									.attr("src");
-							// log(image);
-							cai.mImage = image;
-						}
-						// name
-						if (liChildren.nodeName().equals("h3")
-								&& liChildren.hasClass("htitle")) {
-							Element img = liChildren.child(0);
-							String name = img.text();
-							// log("" + name);
-							String detail = img.attr("href");
-							// log(detail);
-							cai.mName = name;
-							cai.mDetail = detail;
-						}
-
-					}
-					result.add(cai);
-				}//
-			}
-		}
+		List<Cai> result = CaipuListParser.parseListHtml(data);
 
 		return result;
 	}
