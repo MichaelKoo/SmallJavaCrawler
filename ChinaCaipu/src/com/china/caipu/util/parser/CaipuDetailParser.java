@@ -65,7 +65,6 @@ public final class CaipuDetailParser {
 
 		}
 
-		// test caiputDetail.toString();
 		return caipuDetail;
 	}
 

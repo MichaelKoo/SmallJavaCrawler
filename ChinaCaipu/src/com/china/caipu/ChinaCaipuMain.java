@@ -2,18 +2,15 @@ package com.china.caipu;
 
 import java.util.List;
 
+import com.china.caipu.detail.IHandlerDetail;
+import com.china.caipu.detail.IHandlerDetailFactory;
 import com.china.caipu.img.CaiImageFactory;
 import com.china.caipu.img.IImageHandler;
 import com.china.caipu.list.IListHandler;
 import com.china.caipu.list.ListHandlerFactory;
-import com.china.caipu.util.RemoteUtil;
 import com.china.caipu.util.Util;
-import com.china.caipu.util.db.DBCaiDetailUtil;
-import com.china.caipu.util.db.DBCaiListUtil;
-import com.china.caipu.util.parser.CaipuDetailParser;
 import com.china.caipu.vo.Cai;
 import com.china.caipu.vo.CaiDetail;
-import com.mk.IsUtil;
 import com.mk.log.LOG;
 import com.mk.util.MKUtils;
 
@@ -34,7 +31,7 @@ public class ChinaCaipuMain {
 
 	public static void main(String[] args) throws Exception {
 
-		handleCaipuList();
+		handleDetail();
 
 	}
 
@@ -64,6 +61,39 @@ public class ChinaCaipuMain {
 			Thread.sleep(MKUtils.genSleep());
 		}
 		LOG.D("handleCaipuList   -->task over");
+	}
+
+	/**
+	 * 1.获取所有菜；
+	 * 
+	 * 2.根据菜获取详细；
+	 * 
+	 * 3.解析详细；
+	 * 
+	 * 4.存储详细；
+	 * 
+	 * @throws Exception
+	 */
+	static void handleDetail() throws Exception {
+		IHandlerDetail handler = IHandlerDetailFactory.getIHandlerDetail();
+		// 1
+		List<Cai> cais = handler.getAllCai();
+		for (Cai cai : cais) {
+			// 2
+			if (!handler.isExistsDetail(cai)) {
+				// 3
+				String data = handler.getCaiDetail(cai);
+				// 4
+				CaiDetail detail = handler.parseCaiDetail(data);
+				// 5
+				boolean result = handler.saveCaiDetail(detail);
+
+				LOG.D(cai.mName + "<---->" + result);
+
+				Thread.sleep(MKUtils.genSleep());
+			}
+		}
+		LOG.D("task over");
 	}
 
 	static String[] testImage = {
@@ -108,56 +138,4 @@ public class ChinaCaipuMain {
 
 		LOG.D("task over");
 	}
-
-	/**
-	 * 1.从数据库读取连接，
-	 * 
-	 * 2.根据连接获取内容；
-	 * 
-	 * 3.根据内容解析存储；
-	 * 
-	 * 
-	 * 
-	 * @throws Exception
-	 */
-	static void getCaipuDetail() throws Exception {
-
-		List<Cai> dataList = DBCaiListUtil.findAllCai();
-		int count = dataList.size();
-		int time = 0;
-
-		for (int in = count - 1; in >= 0; in--) {
-			Cai cai = dataList.get(in);
-			//
-			if (!DBCaiDetailUtil.findIsExists(cai.mName)) {
-				handleCaipuDetail(cai.mDetail);
-				//
-				Thread.sleep(MKUtils.genSleep());
-			} else {
-				time++;
-				LOG.D(cai.mName + "<---> is exists->>" + time);
-			}
-		}
-
-		LOG.D("   task over  ");
-	}
-
-	/**
-	 * 
-	 * @param detail
-	 *            detail url
-	 * @throws Exception
-	 */
-	static void handleCaipuDetail(String detail) throws Exception {
-
-		String data = RemoteUtil.getRemoteContent(detail);
-
-		CaiDetail caipu = CaipuDetailParser.parseDetail(data);
-
-		if (IsUtil.isNotNull(caipu)) {
-			boolean result = DBCaiDetailUtil.addCaiDetail(caipu);
-			LOG.D("over : " + detail + ":  -->" + result);
-		}
-	}
-
 }// end
