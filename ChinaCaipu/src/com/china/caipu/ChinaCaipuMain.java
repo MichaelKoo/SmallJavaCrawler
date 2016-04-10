@@ -5,15 +5,15 @@ import java.util.List;
 
 import com.china.caipu.detail.IHandlerDetail;
 import com.china.caipu.detail.IHandlerDetailFactory;
-import com.china.caipu.img.ImageFactory;
 import com.china.caipu.img.IImageHandler;
+import com.china.caipu.img.ImageFactory;
 import com.china.caipu.list.IListHandler;
 import com.china.caipu.list.ListHandlerFactory;
-import com.china.caipu.util.Util;
 import com.china.caipu.vo.Cai;
 import com.china.caipu.vo.CaiDetail;
 import com.mk.log.LOG;
 import com.mk.util.MKUtils;
+import com.mk.util.PathUtil;
 
 /**
  * 1¡¢get the food menu list£»
@@ -121,23 +121,22 @@ public class ChinaCaipuMain {
 		List<Cai> all = imageHandler.findAllCai();
 
 		for (Cai cai : all) {
-			// 2
-			String imageName = Util.getImageName(cai.mImage);
+			// 2,
+			String imageName = imageHandler.getImageName(cai.mImage);
 			// 3
 			if (!imageHandler.isExistsImage(imageName)) {
 				// 4
 				InputStream input = imageHandler.downLoadImage(cai.mImage);
 				// 5
-				String path = imageHandler.saveImage(imageName, input);
+				String path = imageHandler.saveImage(imageName,
+						PathUtil.getImagePath(), input);
 
 				LOG.D("<---->" + path);
 				if (input != null) {
 					input.close();
 				}
 				Thread.sleep(MKUtils.genSleep());
-				
 			}
-
 		}
 
 		LOG.D("task over");
