@@ -1,10 +1,11 @@
 package com.china.caipu;
 
+import java.io.InputStream;
 import java.util.List;
 
 import com.china.caipu.detail.IHandlerDetail;
 import com.china.caipu.detail.IHandlerDetailFactory;
-import com.china.caipu.img.CaiImageFactory;
+import com.china.caipu.img.ImageFactory;
 import com.china.caipu.img.IImageHandler;
 import com.china.caipu.list.IListHandler;
 import com.china.caipu.list.ListHandlerFactory;
@@ -31,8 +32,7 @@ public class ChinaCaipuMain {
 
 	public static void main(String[] args) throws Exception {
 
-		handleDetail();
-
+		handleCaipuImage();
 	}
 
 	/**
@@ -116,22 +116,26 @@ public class ChinaCaipuMain {
 	 */
 	static void handleCaipuImage() throws Exception {
 
-		IImageHandler iImageHandler = CaiImageFactory.getIHandlerImg();
-		List<Cai> all = iImageHandler.findAllCai();
+		IImageHandler imageHandler = ImageFactory.getIHandlerImg();
+		// 1
+		List<Cai> all = imageHandler.findAllCai();
 
 		for (Cai cai : all) {
+			// 2
 			String imageName = Util.getImageName(cai.mImage);
+			// 3
+			if (!imageHandler.isExistsImage(imageName)) {
+				// 4
+				InputStream input = imageHandler.downLoadImage(cai.mImage);
+				// 5
+				String path = imageHandler.saveImage(imageName, input);
 
-			if (!Util.isExistsImage(imageName)) {
-				// InputStream input = iImageHandler.downLoadImage(cai.mImage);
-				// String path = iImageHandler.saveImage(imageName, input);
-				//
-				// LOG.D("<---->" + path);
-				// if (input != null) {
-				// input.close();
-				// }
-				// Thread.sleep(MKUtils.genSleep());
-				LOG.D("" + cai.mName);
+				LOG.D("<---->" + path);
+				if (input != null) {
+					input.close();
+				}
+				Thread.sleep(MKUtils.genSleep());
+				
 			}
 
 		}

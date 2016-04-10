@@ -8,7 +8,7 @@ import java.lang.reflect.Proxy;
  * 
  *         2016-4-4
  */
-public final class CaiImageFactory {
+public final class ImageFactory {
 
 	/**
 	 * 
@@ -18,12 +18,12 @@ public final class CaiImageFactory {
 		
 		IImageHandler handler = (IImageHandler) Proxy.newProxyInstance(
 				ClassLoader.getSystemClassLoader(),
-				new Class[] { IImageHandler.class }, new CaiImageInvocationHandler());
+				new Class[] { IImageHandler.class }, new ImageInvocationHandler());
 
 		return handler;
 	}
 
-	private CaiImageFactory() {
+	private ImageFactory() {
 
 	}
 

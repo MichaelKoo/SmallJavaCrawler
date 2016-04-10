@@ -21,6 +21,14 @@ public interface IImageHandler {
 	public List<Cai> findAllCai() throws Exception;
 
 	/**
+	 * 
+	 * @param name
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean isExistsImage(String name) throws Exception;
+
+	/**
 	 * @param url
 	 *            image path
 	 * @return

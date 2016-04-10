@@ -9,8 +9,8 @@ import java.lang.reflect.Method;
  * 
  *         2016-4-5
  */
-final class CaiImageInvocationHandler implements InvocationHandler {
-	public CaiImageInvocationHandler() {
+final class ImageInvocationHandler implements InvocationHandler {
+	public ImageInvocationHandler() {
 
 	}
 
