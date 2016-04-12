@@ -119,7 +119,7 @@ public class ChinaCaipuMain {
 		IImageHandler imageHandler = ImageFactory.getIHandlerImg();
 		// 1
 		List<Cai> all = imageHandler.findAllCai();
-
+		int count=0;
 		for (Cai cai : all) {
 			// 2,
 			String imageName = imageHandler.getImageName(cai.mImage);
@@ -136,9 +136,11 @@ public class ChinaCaipuMain {
 					input.close();
 				}
 				Thread.sleep(MKUtils.genSleep());
+			}else{
+				count++;
 			}
 		}
 
-		LOG.D("task over");
+		LOG.D("task over-->"+count);
 	}
 }// end

@@ -24,7 +24,7 @@ import com.mk.IsUtil;
  */
 public final class DBCaiListUtil {
 
-	private static final String TABLE = " test ";
+	private static final String TABLE = " yuecai ";
 
 	static final class CPField {
 		static final String NAME = "name";
