@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.china.caipu.net.NetFactory;
 import com.china.caipu.util.Util;
-import com.china.caipu.util.db.DBCaiListUtil;
+import com.china.caipu.util.db.DBCaiUtil;
 import com.china.caipu.vo.Cai;
 import com.mk.IsUtil;
 import com.mk.util.MKUtils;
@@ -33,7 +33,7 @@ public final class IImageHandlerImpl implements IImageHandler {
 	@Override
 	public List<Cai> findAllCai() throws Exception {
 		// TODO Auto-generated method stub
-		return DBCaiListUtil.findAllCai();
+		return DBCaiUtil.findAllCai();
 	}
 
 	@Override

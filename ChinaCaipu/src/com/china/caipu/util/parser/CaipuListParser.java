@@ -8,7 +8,10 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.china.caipu.util.RemoteUtil;
+import com.china.caipu.util.Util;
 import com.china.caipu.vo.Cai;
+import com.china.caipu.vo.CaiDetail;
 import com.mk.IsUtil;
 
 /**
@@ -19,6 +22,55 @@ import com.mk.IsUtil;
  *         2016-3-31
  */
 public final class CaipuListParser {
+
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 * @throws Exception
+	 */
+	static CaiDetail parseCaiDetail(String url) throws Exception {
+		String html = RemoteUtil.getRemoteContent(url);
+		CaiDetail detail = CaipuDetailParser.parseDetail(html);
+		if (detail != null) {
+			return detail;
+		}
+
+		return null;
+	}
+
+	/**
+	 * 
+	 * @param data
+	 * @return
+	 * @throws Exception
+	 */
+	public static String parseNext(String data) throws Exception {
+		String result = null;
+		if (IsUtil.isNull(data)) {
+			return result;
+		}
+
+		Document doc = Jsoup.parse(data);
+		Elements childs = doc.getAllElements();
+		for (Element ele : childs) {
+			if (isCorrect(ele)) {
+				if (ele.hasAttr("href")) {
+					result = "http://www.chinacaipu.com" + ele.attr("href");
+				}
+			}
+		}
+
+		return result;
+	}
+
+	private static boolean isCorrect(Element element) {
+		if ("a".equals(element.nodeName()) && element.text().contains("ÏÂÒ»Ò³")) {
+			return true;
+		}
+		return false;
+	}
+
 	/**
 	 * 
 	 * @param data
@@ -40,6 +92,7 @@ public final class CaipuListParser {
 				Element li = eles.get(in);
 				Elements liChilds = li.children();
 				Cai cai = new Cai();
+				cai.mCaiID = Util.genUUID();
 				for (Element ele : liChilds) {// li
 
 					if (ele.hasAttr("class") && "div".equals(ele.nodeName())) {
@@ -50,6 +103,15 @@ public final class CaipuListParser {
 									&& "a".equals(divChild.nodeName())) {
 								// href
 								cai.mDetail = divChild.attr("href");
+
+								// if (IsUtil.isNotNull(cai.mDetail)) {
+								// CaiDetail cd = parseCaiDetail(cai.mDetail);
+								// if (cd != null) {
+								// cai.mDetail = cd.mDetail;
+								// cai.mDetailDescrip = cd.mDescrip;
+								// }
+								// }
+
 							}
 							if (divChild.hasAttr("alt")
 									&& divChild.hasAttr("src")

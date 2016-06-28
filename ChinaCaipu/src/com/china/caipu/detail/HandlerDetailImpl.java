@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.china.caipu.util.RemoteUtil;
 import com.china.caipu.util.db.DBCaiDetailUtil;
-import com.china.caipu.util.db.DBCaiListUtil;
+import com.china.caipu.util.db.DBCaiUtil;
 import com.china.caipu.util.parser.CaipuDetailParser;
 import com.china.caipu.vo.Cai;
 import com.china.caipu.vo.CaiDetail;
@@ -21,7 +21,7 @@ final class HandlerDetailImpl implements IHandlerDetail {
 	@Override
 	public List<Cai> getAllCai() throws Exception {
 		// TODO Auto-generated method stub
-		return DBCaiListUtil.findAllCai();
+		return DBCaiUtil.findAllCai();
 	}
 
 	/**

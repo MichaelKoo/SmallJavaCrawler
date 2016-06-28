@@ -3,8 +3,9 @@ package com.china.caipu.list;
 import java.util.List;
 
 import com.china.caipu.constant.Config;
+import com.china.caipu.list.inter.IListHandler;
 import com.china.caipu.util.RemoteUtil;
-import com.china.caipu.util.db.DBCaiListUtil;
+import com.china.caipu.util.db.DBCaiUtil;
 import com.china.caipu.util.parser.CaipuListParser;
 import com.china.caipu.vo.Cai;
 import com.mk.log.LOG;
@@ -150,7 +151,7 @@ final class ListHandlerImpl implements IListHandler {
 	@Override
 	public boolean saveContent(Cai cai) throws Exception {
 		// TODO Auto-generated method stub
-		return DBCaiListUtil.addCai(cai);
+		return DBCaiUtil.addCai(cai);
 	}
 
 }// end

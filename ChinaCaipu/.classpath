@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre8"/>
 	<classpathentry kind="lib" path="C:/Users/MK/Downloads/jsoup-1.8.3.jar" sourcepath="C:/Users/MK/Downloads/jsoup-1.8.3-sources.jar"/>
-	<classpathentry kind="lib" path="/MKLib/bin"/>
+	<classpathentry kind="lib" path="/MKLib/bin" sourcepath="/MKLib/src"/>
 	<classpathentry kind="lib" path="C:/Users/MK/Downloads/mysql-connector-java-5.1.38/mysql-connector-java-5.1.38-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
