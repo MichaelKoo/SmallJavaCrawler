@@ -28,10 +28,10 @@ CREATE TABLE `cai` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 2、本篇开发IDE是eclipse 4.2,工程结构也是从eclipse导出，可以直接导入到eclipse IDE中，
-   打开 com.china.caipu.ChinaCaipuMain，直接运行即可。
+   打开 com/china/caipu/ChinaCaipuMain.java，直接运行即可。
    
 3、执行顺序是：
-      A、初始化菜系；<br/>
+     <br/> A、初始化菜系；<br/>
       B、获取菜系的所有菜；<br/>
       C、处理菜的详细；<br/>
       D、处理菜的图片;<br/>
@@ -39,6 +39,10 @@ CREATE TABLE `cai` (
 4、执行结果：
   如图
   <img src="https://github.com/MichaelKoo/SmallJavaCrawler/blob/master/cai.png" alt="cai"/>
+  <br/>
+  <br/>
   <img src="https://github.com/MichaelKoo/SmallJavaCrawler/blob/master/caixi.png" alt="caixi"/>
+  
+5、温馨提示，此爬虫仅供学习！
 
 
