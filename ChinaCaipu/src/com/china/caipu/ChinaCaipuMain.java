@@ -11,7 +11,6 @@ import com.china.caipu.img.ImageFactory;
 import com.china.caipu.list.AbsListHandler;
 import com.china.caipu.list.AbsListHandlerFactory;
 import com.china.caipu.util.Util;
-import com.china.caipu.util.db.CaiDbUtil;
 import com.china.caipu.util.db.CaiXiDbUtil;
 import com.china.caipu.vo.Cai;
 import com.china.caipu.vo.CaiDetail;
@@ -157,7 +156,7 @@ public class ChinaCaipuMain {
 			// 4
 			boolean result = handler.saveCaiDetail(cai);
 
-			LOG.D(cai.mName + "<---->" + result);
+			LOG.D(cai.mName + "<--Ìí¼ÓÏêÏ¸½á¹û-->" + result);
 
 			Thread.sleep(MKUtils.genSleep());
 		}
@@ -183,7 +182,6 @@ public class ChinaCaipuMain {
 		List<Cai> all = imageHandler.findAllCai();
 		for (Cai cai : all) {
 			// 2,
-			LOG.D("" + cai.mImage);
 			String imageName = imageHandler.getImageName(cai.mImage);
 			// 3
 			if (!imageHandler.isExistsImage(imageName)) {
