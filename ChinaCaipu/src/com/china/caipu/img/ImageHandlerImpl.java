@@ -3,11 +3,11 @@ package com.china.caipu.img;
 import java.io.InputStream;
 import java.util.List;
 
-import com.china.caipu.net.NetFactory;
 import com.china.caipu.util.Util;
 import com.china.caipu.util.db.CaiDbUtil;
 import com.china.caipu.vo.Cai;
 import com.mk.IsUtil;
+import com.mk.net.NetFactory;
 import com.mk.util.MKUtils;
 
 /**

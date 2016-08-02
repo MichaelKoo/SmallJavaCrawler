@@ -10,9 +10,9 @@ import com.mk.util.MKUtils;
 
 /**
  * 
- * @author {Mark Sir}
+ * @author {MichaelKoo, MK520VIP@163.com}
  * 
- *         2016-4-8
+ *         RemoteUtil.java
  */
 public final class RemoteUtil {
 
