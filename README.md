@@ -2,8 +2,8 @@
 java for crawler
 测试网站："http://www.chinacaipu.com/"
 
-1、配置好数据库，本篇默认是MySQL,环境需要自己安装哦！
-caixi表创建SQL：
+1、配置好数据库，本篇默认是MySQL,环境需要自己安装哦！<br/>
+caixi表创建SQL：<br/>
 DROP TABLE IF EXISTS `caixi`;
 CREATE TABLE `caixi` (
   `caixiID` varchar(36) NOT NULL,
@@ -11,8 +11,8 @@ CREATE TABLE `caixi` (
   `caixiSrc` varchar(100) NOT NULL,
   PRIMARY KEY (`caixiID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-cai表创建SQL：
+<br/>
+cai表创建SQL：<br/>
 DROP TABLE IF EXISTS `cai`;
 CREATE TABLE `cai` (
   `caiID` varchar(36) NOT NULL,
@@ -31,12 +31,14 @@ CREATE TABLE `cai` (
    打开 com.china.caipu.ChinaCaipuMain，直接运行即可。
    
 3、执行顺序是：
-      A、初始化菜系；
-      B、获取菜系的所有菜；
-      C、处理菜的详细；
-      D、处理菜的图片;
+      A、初始化菜系；<br/>
+      B、获取菜系的所有菜；<br/>
+      C、处理菜的详细；<br/>
+      D、处理菜的图片;<br/>
       
 4、执行结果：
-  如图 caixi，cai 
+  如图
+  <img src="https://github.com/MichaelKoo/SmallJavaCrawler/blob/master/cai.png" alt="cai"/>
+  <img src="https://github.com/MichaelKoo/SmallJavaCrawler/blob/master/caixi.png" alt="caixi"/>
 
 
