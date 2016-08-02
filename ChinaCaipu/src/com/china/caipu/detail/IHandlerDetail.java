@@ -16,11 +16,9 @@ import com.china.caipu.vo.CaiDetail;
  * 
  * 5.存储详细；
  * 
- * @author {Mark Sir}
  * 
- *         2016-4-9
  * 
- *         先有再优化
+ * 先有再优化
  */
 public interface IHandlerDetail {
 
@@ -32,6 +30,6 @@ public interface IHandlerDetail {
 
 	public CaiDetail parseCaiDetail(String data) throws Exception;
 
-	public boolean saveCaiDetail(CaiDetail detail) throws Exception;
+	public boolean saveCaiDetail(Cai cai) throws Exception;
 
 }// end

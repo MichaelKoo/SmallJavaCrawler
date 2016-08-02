@@ -31,7 +31,7 @@ public final class CaipuListParser {
 	 */
 	static CaiDetail parseCaiDetail(String url) throws Exception {
 		String html = RemoteUtil.getRemoteContent(url);
-		CaiDetail detail = CaipuDetailParser.parseDetail(html);
+		CaiDetail detail = CaiDetailParser.parseDetail(html);
 		if (detail != null) {
 			return detail;
 		}

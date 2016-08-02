@@ -17,9 +17,6 @@ import com.china.caipu.vo.Cai;
  * 5¡¢´æ´¢Í¼Æ¬£»
  * 
  * 
- * @author {Mark Sir}
- * 
- *         2016-4-4
  */
 public interface IImageHandler {
 

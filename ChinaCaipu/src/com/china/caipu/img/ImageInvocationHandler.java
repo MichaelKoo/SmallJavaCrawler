@@ -3,12 +3,6 @@ package com.china.caipu.img;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-/**
- * 
- * @author {Mark Sir}
- * 
- *         2016-4-5
- */
 final class ImageInvocationHandler implements InvocationHandler {
 	public ImageInvocationHandler() {
 
@@ -22,7 +16,7 @@ final class ImageInvocationHandler implements InvocationHandler {
 	}
 
 	private static Object getObj() {
-		Class<?> cls = IImageHandlerImpl.class;
+		Class<?> cls = ImageHandlerImpl.class;
 		try {
 			Object obj = cls.newInstance();
 			return obj;

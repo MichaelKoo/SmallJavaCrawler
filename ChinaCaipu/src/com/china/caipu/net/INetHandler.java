@@ -6,10 +6,6 @@ import java.util.Map;
 /**
  * doPost,doGet
  * 
- * 
- * @author {Mark Sir}
- * 
- *         2016-4-4
  */
 public interface INetHandler {
 

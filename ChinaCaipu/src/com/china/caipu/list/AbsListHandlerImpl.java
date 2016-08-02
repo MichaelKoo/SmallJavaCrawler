@@ -3,7 +3,7 @@ package com.china.caipu.list;
 import java.util.List;
 
 import com.china.caipu.util.RemoteUtil;
-import com.china.caipu.util.db.DBCaiUtil;
+import com.china.caipu.util.db.CaiDbUtil;
 import com.china.caipu.util.db.DBCaiXiUtil;
 import com.china.caipu.util.parser.CaipuListParser;
 import com.china.caipu.vo.Cai;
@@ -59,7 +59,7 @@ public final class AbsListHandlerImpl extends AbsListHandler {
 	@Override
 	public boolean saveContent(Cai cai) throws Exception {
 		// TODO Auto-generated method stub
-		return DBCaiUtil.addCai(cai);
+		return CaiDbUtil.addCai(cai);
 	}
 
 	/**

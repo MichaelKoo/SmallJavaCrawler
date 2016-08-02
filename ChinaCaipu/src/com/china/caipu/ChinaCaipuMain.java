@@ -22,26 +22,54 @@ import com.mk.util.MKUtils;
 import com.mk.util.PathUtil;
 
 /**
- * 1、get the food menu list；
+ * 1、初始化菜系；
  * 
- * 2、get the food detail；
+ * 2、获取菜系的所有菜；
  * 
- * 3、get the food list image；
+ * 3、处理菜的详细；
+ * 
+ * 4、处理菜的图片;
  * 
  * 
- * @author {MichaelKoo }
- *
- *  ChinaCaipuMain.java
+ * @author {MichaelKoo, MK520VIP@163.com}
+ * 
+ *         ChinaCaipuMain.java
  */
 public class ChinaCaipuMain {
 
 	public static void main(String[] args) throws Exception {
-		
+
+		if (initCaiXi()) {
+			if (handleCaiList()) {
+				if (handleCaiDetail()) {
+					handleCaiImage();
+				}
+			}
+		}
 	}
 
-	
+	/**
+	 * 初始化所有菜系
+	 * 
+	 * @throws Exception
+	 */
+	static boolean initCaiXi() throws Exception {
+		String[] names = Config.CaiXiSrc.CAIXI_NAMES;
+		String[] urls = Config.CaiXiSrc.CAIXI_URLS;
 
-	/**1、获取菜系列表
+		for (int in = 0; in < names.length; in++) {
+			CaiXi cx = new CaiXi();
+			cx.mCaiXiID = Util.genUUID();
+			cx.mCaiXiName = names[in];
+			cx.mCaiXiSrc = urls[in];
+
+			DBCaiXiUtil.addCai(cx);
+		}
+		return true;
+	}
+
+	/**
+	 * 1、获取菜系列表
 	 * 
 	 * 2、获取菜系下所有的菜
 	 * 
@@ -53,7 +81,7 @@ public class ChinaCaipuMain {
 	 * 
 	 * @throws Exception
 	 */
-	static void handleCaiList() throws Exception {
+	static boolean handleCaiList() throws Exception {
 		AbsListHandler listHandler = AbsListHandlerFactory.getHandler();
 		// 1、获取菜系列表
 		List<CaiXi> caiXiList = listHandler.getCaiXi();
@@ -69,8 +97,8 @@ public class ChinaCaipuMain {
 				}
 				// 3、解析菜
 				CaiList caiList = listHandler.parseContent(html);
-				
-				// 4、保存菜
+
+				// 4、保存该菜系在本页中的菜
 				listHandler.handleCaiList(caiXi.mCaiXiID, caiList.mCaiList);
 
 				// 获取下一页
@@ -79,43 +107,24 @@ public class ChinaCaipuMain {
 				LOG.D("next page=" + next);
 
 				if (IsUtil.isNull(caiList.mNext)) {
-					LOG.D(caiXi.mCaiXiName + " <--->完成");
+					LOG.D(caiXi.mCaiXiName + "  菜系 完成");
 					break;
 				}
-				
+
 				Thread.sleep(MKUtils.genSleep());
-				
+
 			}// 本菜系完成
 
-		}//所有菜系完成
-		
-		
+		}// 所有菜系完成
+
 		LOG.D("task over");
-	}
-
-	/**
-	 * 初始化所有菜系
-	 * 
-	 * @throws Exception
-	 */
-	static void handleCaiXi() throws Exception {
-		String[] names = Config.CaiXiSrc.CAIXI_NAMES;
-		String[] urls = Config.CaiXiSrc.CAIXI_URLS;
-
-		for (int in = 0; in < names.length; in++) {
-			CaiXi cx = new CaiXi();
-			cx.mCaiXiID = Util.genUUID();
-			cx.mCaiXiName = names[in];
-			cx.mCaiXiSrc = urls[in];
-
-			DBCaiXiUtil.addCai(cx);
-		}
+		return true;
 	}
 
 	/**
 	 * 1.获取所有菜；
 	 * 
-	 * 2.根据菜获取详细；
+	 * 2.根据菜获取菜的详细
 	 * 
 	 * 3.解析详细；
 	 * 
@@ -123,26 +132,33 @@ public class ChinaCaipuMain {
 	 * 
 	 * @throws Exception
 	 */
-	static boolean handleDetail() throws Exception {
+	static boolean handleCaiDetail() throws Exception {
 		IHandlerDetail handler = IHandlerDetailFactory.getIHandlerDetail();
 		// 1
 		List<Cai> cais = handler.getAllCai();
 		for (Cai cai : cais) {
+
 			// 2
-			if (!handler.isExistsDetail(cai)) {
-				// 3
-				String data = handler.getCaiDetail(cai);
-				// 4
-				CaiDetail detail = handler.parseCaiDetail(data);
-				// 5
-				boolean result = handler.saveCaiDetail(detail);
-
-				LOG.D(cai.mName + "<---->" + result);
-
-				Thread.sleep(MKUtils.genSleep());
+			String data = handler.getCaiDetail(cai);
+			if (IsUtil.isNull(data)) {
+				continue;
 			}
+			// 3
+			CaiDetail detail = handler.parseCaiDetail(data);
+			if (IsUtil.isNull(detail.mDetail)) {
+				continue;
+			}
+			cai.mDetail = detail.mDetail;
+			// 4
+			boolean result = handler.saveCaiDetail(cai);
+
+			LOG.D(cai.mName + "<---->" + result);
+
+			Thread.sleep(MKUtils.genSleep());
 		}
+
 		LOG.D("task over");
+
 		return true;
 	}
 
@@ -155,7 +171,7 @@ public class ChinaCaipuMain {
 	 * 
 	 * @throws Exception
 	 */
-	static void handleCaipuImage() throws Exception {
+	static void handleCaiImage() throws Exception {
 
 		IImageHandler imageHandler = ImageFactory.getIHandlerImg();
 		// 1
@@ -187,6 +203,6 @@ public class ChinaCaipuMain {
 			}
 		}
 
-		LOG.D("task over-->" + count);
+		LOG.D("task over--已经存在=" + count);
 	}
 }// end

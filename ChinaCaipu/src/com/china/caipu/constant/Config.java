@@ -2,11 +2,12 @@ package com.china.caipu.constant;
 
 /**
  * 
- * @author {Mark Sir}
+ * @author {MichaelKoo, MK520VIP@163.com}
  * 
- *         2016-4-2
+ *         Config.java
  */
 public final class Config {
+
 	/** for DB table query all */
 	public static final String ALL = "*";
 
@@ -31,13 +32,13 @@ public final class Config {
 			"Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.2.149.27 Safari/525.13"
 	//
 	};
-	
+
 	/**
 	 * 菜系内容
 	 * 
-	 * @author {Mark_Sir}
-	 *
-	 *2016-6-10
+	 * @author {MichaelKoo, MK520VIP@163.com}
+	 * 
+	 *         Config.java
 	 */
 	public static class CaiXiSrc {
 		static final String YUE_CAI = "http://www.chinacaipu.com/menu/guangdongecai/";
@@ -59,8 +60,4 @@ public final class Config {
 				"东北菜", "浙菜", "安徽菜", "湖北菜" };
 	}
 
-	/**
-	 * 
-	 */
-	public static final String URL_PRE = CaiXiSrc.DONG_BEI_CAI;
 }// end

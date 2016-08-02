@@ -3,25 +3,28 @@ package com.china.caipu.detail;
 import java.util.List;
 
 import com.china.caipu.util.RemoteUtil;
-import com.china.caipu.util.db.DBCaiDetailUtil;
-import com.china.caipu.util.db.DBCaiUtil;
-import com.china.caipu.util.parser.CaipuDetailParser;
+import com.china.caipu.util.db.CaiDetailDbUtil;
+import com.china.caipu.util.db.CaiDbUtil;
+import com.china.caipu.util.parser.CaiDetailParser;
 import com.china.caipu.vo.Cai;
 import com.china.caipu.vo.CaiDetail;
 import com.mk.IsUtil;
 
 /**
  * 
- * @author {Mark Sir}
+ * @author {MichaelKoo, MK520VIP@163.com}
  * 
- *         2016-4-9
+ *         HandlerDetailImpl.java
  */
 final class HandlerDetailImpl implements IHandlerDetail {
 
+	/**
+	 * 查找所有没有菜详细的菜
+	 */
 	@Override
 	public List<Cai> getAllCai() throws Exception {
 		// TODO Auto-generated method stub
-		return DBCaiUtil.findAllCai();
+		return CaiDbUtil.findAllNotDetail();
 	}
 
 	/**
@@ -30,7 +33,7 @@ final class HandlerDetailImpl implements IHandlerDetail {
 	@Override
 	public boolean isExistsDetail(Cai cai) throws Exception {
 		// TODO Auto-generated method stub
-		return DBCaiDetailUtil.findIsExists(cai.mName);
+		return CaiDetailDbUtil.findIsExists(cai.mName);
 	}
 
 	@Override
@@ -42,16 +45,19 @@ final class HandlerDetailImpl implements IHandlerDetail {
 		return RemoteUtil.getRemoteContent(cai.mDetail);
 	}
 
+	/**
+	 * @see CaiDetailParser#parseDetail(String)
+	 */
 	@Override
 	public CaiDetail parseCaiDetail(String data) throws Exception {
 		// TODO Auto-generated method stub
-		return CaipuDetailParser.parseDetail(data);
+		return CaiDetailParser.parseDetail(data);
 	}
 
 	@Override
-	public boolean saveCaiDetail(CaiDetail detail) throws Exception {
+	public boolean saveCaiDetail(Cai cai) throws Exception {
 		// TODO Auto-generated method stub
-		return DBCaiDetailUtil.addCaiDetail(detail);
+		return CaiDbUtil.updateCaiDetail(cai);
 	}
 
 }// end

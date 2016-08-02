@@ -6,9 +6,9 @@ import java.lang.reflect.Proxy;
 
 /**
  * 
- * @author {Mark Sir}
+ * @author {MichaelKoo, MK520VIP@163.com}
  * 
- *         2016-4-9
+ *         IHandlerDetailFactory.java
  */
 public final class IHandlerDetailFactory {
 
@@ -21,12 +21,6 @@ public final class IHandlerDetailFactory {
 		return handler;
 	}
 
-	/**
-	 * 
-	 * @author {Mark Sir}
-	 * 
-	 *         2016-4-9
-	 */
 	private static class IHandlerDetailInvocationHandler implements
 			InvocationHandler {
 

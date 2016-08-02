@@ -5,9 +5,9 @@ import java.lang.reflect.Method;
 
 /**
  * 
- * @author {Mark Sir}
+ * @author {MichaelKoo, MK520VIP@163.com}
  * 
- *         2016-4-5
+ *         NetHandler.java
  */
 final class NetHandler implements InvocationHandler {
 
