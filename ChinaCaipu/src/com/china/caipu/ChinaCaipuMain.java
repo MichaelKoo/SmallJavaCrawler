@@ -11,7 +11,8 @@ import com.china.caipu.img.ImageFactory;
 import com.china.caipu.list.AbsListHandler;
 import com.china.caipu.list.AbsListHandlerFactory;
 import com.china.caipu.util.Util;
-import com.china.caipu.util.db.DBCaiXiUtil;
+import com.china.caipu.util.db.CaiDbUtil;
+import com.china.caipu.util.db.CaiXiDbUtil;
 import com.china.caipu.vo.Cai;
 import com.china.caipu.vo.CaiDetail;
 import com.china.caipu.vo.CaiList;
@@ -46,7 +47,6 @@ public class ChinaCaipuMain {
 				}
 			}
 		}
-		
 	}
 
 	/**
@@ -64,8 +64,10 @@ public class ChinaCaipuMain {
 			cx.mCaiXiName = names[in];
 			cx.mCaiXiSrc = urls[in];
 
-			DBCaiXiUtil.addCai(cx);
+			CaiXiDbUtil.addCai(cx);
 		}
+		LOG.D("菜系初始化完成");
+
 		return true;
 	}
 
@@ -118,7 +120,8 @@ public class ChinaCaipuMain {
 
 		}// 所有菜系完成
 
-		LOG.D("task over");
+		LOG.D("获取菜系下属菜列表完成");
+
 		return true;
 	}
 
@@ -146,10 +149,11 @@ public class ChinaCaipuMain {
 			}
 			// 3
 			CaiDetail detail = handler.parseCaiDetail(data);
-			if (IsUtil.isNull(detail.mDetail)) {
+			if (IsUtil.isNull(detail) || IsUtil.isNull(detail.mDetail)) {
 				continue;
 			}
 			cai.mDetail = detail.mDetail;
+			cai.mDetailDescrip = detail.mDescrip;
 			// 4
 			boolean result = handler.saveCaiDetail(cai);
 
@@ -158,7 +162,7 @@ public class ChinaCaipuMain {
 			Thread.sleep(MKUtils.genSleep());
 		}
 
-		LOG.D("task over");
+		LOG.D("处理菜的详细完成");
 
 		return true;
 	}
@@ -177,9 +181,9 @@ public class ChinaCaipuMain {
 		IImageHandler imageHandler = ImageFactory.getIHandlerImg();
 		// 1
 		List<Cai> all = imageHandler.findAllCai();
-		int count = 0;
 		for (Cai cai : all) {
 			// 2,
+			LOG.D("" + cai.mImage);
 			String imageName = imageHandler.getImageName(cai.mImage);
 			// 3
 			if (!imageHandler.isExistsImage(imageName)) {
@@ -199,11 +203,8 @@ public class ChinaCaipuMain {
 					LOG.D("" + e.getMessage());
 				}
 
-			} else {
-				count++;
 			}
 		}
 
-		LOG.D("task over--已经存在=" + count);
 	}
 }// end

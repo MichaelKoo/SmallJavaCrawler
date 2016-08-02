@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.china.caipu.util.RemoteUtil;
 import com.china.caipu.util.db.CaiDbUtil;
-import com.china.caipu.util.db.DBCaiXiUtil;
+import com.china.caipu.util.db.CaiXiDbUtil;
 import com.china.caipu.util.parser.CaipuListParser;
 import com.china.caipu.vo.Cai;
 import com.china.caipu.vo.CaiList;
@@ -24,7 +24,7 @@ public final class AbsListHandlerImpl extends AbsListHandler {
 	@Override
 	public List<CaiXi> getCaiXi() throws Exception {
 		// TODO Auto-generated method stub
-		return DBCaiXiUtil.findAllCai();
+		return CaiXiDbUtil.findAllCai();
 	}
 
 	/**

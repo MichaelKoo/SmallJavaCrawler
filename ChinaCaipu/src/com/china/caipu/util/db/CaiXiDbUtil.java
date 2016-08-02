@@ -19,7 +19,7 @@ import com.mk.IsUtil;
  * 
  *         2016-4-13
  */
-public final class DBCaiXiUtil {
+public final class CaiXiDbUtil {
 
 	private static final String TABLE = " caixi ";
 

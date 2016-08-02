@@ -26,11 +26,13 @@ public final class CaiDbUtil {
 	private static final String TABLE = " cai ";
 
 	private static final class CField {
-		static final String ID = "caiId";
+		static final String ID = "caiID";
 		static final String CAI_XI_ID = "caixiID";
 		static final String NAME = "caiName";
-
+		static final String IMAGE = "caiImage";
+		static final String DESCRIP = "caiDescrip";
 		static final String DETAIL = "caiDetail";
+		static final String DETAIL_DESCRUP = "caiDetailDescrip";
 
 		static String getAllField() {
 			StringBuilder sb = new StringBuilder();
@@ -156,11 +158,13 @@ public final class CaiDbUtil {
 			StringBuilder sql = new StringBuilder();
 			sql.append("UPDATE ").append(TABLE).append(" SET ")
 					.append(CField.DETAIL).append(" = ? ");
+			sql.append(" , ").append(CField.DETAIL_DESCRUP).append(" = ? ");
 			sql.append(" WHERE ").append(CField.ID).append(" = ? ");
 			psmt = conn.prepareStatement(sql.toString());
 
 			psmt.setString(1, cai.mDetail);
-			psmt.setString(2, cai.mCaiID);
+			psmt.setString(2, cai.mDetailDescrip);
+			psmt.setString(3, cai.mCaiID);
 
 			result = psmt.executeUpdate() > 0;
 
@@ -245,9 +249,10 @@ public final class CaiDbUtil {
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				Cai cai = new Cai();
-				cai.mCaiID = rs.getString(1);
-				cai.mDetail = rs.getString(2);
-				cai.mName = rs.getString(3);
+				cai.mCaiID = rs.getString(CField.ID);
+				cai.mDetail = rs.getString(CField.DETAIL);
+				cai.mName = rs.getString(CField.NAME);
+
 				result.add(cai);
 			}
 		} finally {
@@ -278,10 +283,11 @@ public final class CaiDbUtil {
 		ResultSet rs = psmt.executeQuery();
 		while (rs.next()) {
 			Cai cai = new Cai();
-			cai.mName = rs.getString(1);
-			cai.mDescrip = rs.getString(2);
-			cai.mImage = rs.getString(3);
-			cai.mDetail = rs.getString(4);
+
+			cai.mName = rs.getString(CField.NAME);
+			cai.mDescrip = rs.getString(CField.DESCRIP);
+			cai.mImage = rs.getString(CField.IMAGE);
+			cai.mDetail = rs.getString(CField.DETAIL);
 			result.add(cai);
 		}
 

@@ -23,14 +23,14 @@ public final class CaiDetailDbUtil {
 
 	private static final String TABLE = " dongbeicaidetail ";
 
-	static final class CPField {
+	static final class CDField {
 		static final String NAME = "name";
 		static final String DESCRIP = "descrip";
 		static final String DETAIL = "detail";
 
 		static String getAllField() {
 			StringBuilder sb = new StringBuilder();
-			Class<?> cls = CPField.class;
+			Class<?> cls = CDField.class;
 			Field[] fs = cls.getDeclaredFields();
 			for (Field field : fs) {
 				try {
@@ -64,7 +64,7 @@ public final class CaiDetailDbUtil {
 				sb.append("INSERT INTO ");
 				sb.append(TABLE);
 				sb.append(" ( ");
-				sb.append(CPField.getAllField());
+				sb.append(CDField.getAllField());
 				sb.append(" ) VALUES ( ");
 				sb.append("?,?,?");
 				sb.append(" ) ;");
@@ -112,13 +112,13 @@ public final class CaiDetailDbUtil {
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT ");
-		sb.append(CPField.NAME);
+		sb.append(CDField.NAME);
 		sb.append(",");
-		sb.append(CPField.DETAIL);
+		sb.append(CDField.DETAIL);
 		sb.append(" FROM ");
 		sb.append(TABLE);
 		sb.append("WHERE ");
-		sb.append(CPField.NAME + " like  " + "?");
+		sb.append(CDField.NAME + " like  " + "?");
 
 		PreparedStatement psmt = conn.prepareStatement(sb.toString());
 		psmt.setString(1, name);
@@ -152,10 +152,10 @@ public final class CaiDetailDbUtil {
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT ");
-		sb.append(CPField.NAME);
+		sb.append(CDField.NAME);
 		sb.append(" FROM ");
 		sb.append(TABLE);
-		sb.append("WHERE " + CPField.NAME);
+		sb.append("WHERE " + CDField.NAME);
 		sb.append(" = ? ");
 
 		PreparedStatement psmt = conn.prepareStatement(sb.toString());
