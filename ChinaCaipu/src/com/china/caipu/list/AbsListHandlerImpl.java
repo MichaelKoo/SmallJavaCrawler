@@ -11,18 +11,25 @@ import com.china.caipu.vo.CaiList;
 import com.china.caipu.vo.CaiXi;
 
 /**
+ * 具体实现
  * 
- * @author {Mark_Sir}
+ * @author {MichaelKoo, MK520VIP@163.com}
  * 
- *         2016-4-13
+ *         AbsListHandlerImpl.java
  */
 public final class AbsListHandlerImpl extends AbsListHandler {
+	/**
+	 * 从数据库找出所有菜系
+	 */
 	@Override
 	public List<CaiXi> getCaiXi() throws Exception {
 		// TODO Auto-generated method stub
 		return DBCaiXiUtil.findAllCai();
 	}
 
+	/**
+	 * 获取网络数据
+	 */
 	@Override
 	public String getContent(String url) throws Exception {
 		// TODO Auto-generated method stub
@@ -30,6 +37,8 @@ public final class AbsListHandlerImpl extends AbsListHandler {
 	}
 
 	/**
+	 * 解析所有菜，解析下一页
+	 * 
 	 * @param html
 	 *            {@link #getContent(String)}
 	 */
@@ -44,6 +53,9 @@ public final class AbsListHandlerImpl extends AbsListHandler {
 		return caiList;
 	}
 
+	/**
+	 * 保存菜
+	 */
 	@Override
 	public boolean saveContent(Cai cai) throws Exception {
 		// TODO Auto-generated method stub
@@ -51,7 +63,7 @@ public final class AbsListHandlerImpl extends AbsListHandler {
 	}
 
 	/**
-	 * return ignore
+	 * 保存菜系下的所有菜 {@link #saveContent(Cai)}
 	 */
 	@Override
 	public boolean handleCaiList(String caiXiID, List<Cai> list)

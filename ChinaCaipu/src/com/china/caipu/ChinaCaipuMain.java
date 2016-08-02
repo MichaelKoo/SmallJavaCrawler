@@ -28,19 +28,28 @@ import com.mk.util.PathUtil;
  * 
  * 3、get the food list image；
  * 
- * 要有容错机制
  * 
- * @author {Mark Sir}
- * 
- *         2016-3-31
+ * @author {MichaelKoo }
+ *
+ *  ChinaCaipuMain.java
  */
 public class ChinaCaipuMain {
 
 	public static void main(String[] args) throws Exception {
-			
-	}	
+		
+	}
 
-	/**
+	
+
+	/**1、获取菜系列表
+	 * 
+	 * 2、获取菜系下所有的菜
+	 * 
+	 * 3、解析菜
+	 * 
+	 * 4、保存菜
+	 * 
+	 * 5 、获取下一页
 	 * 
 	 * @throws Exception
 	 */
@@ -60,6 +69,7 @@ public class ChinaCaipuMain {
 				}
 				// 3、解析菜
 				CaiList caiList = listHandler.parseContent(html);
+				
 				// 4、保存菜
 				listHandler.handleCaiList(caiXi.mCaiXiID, caiList.mCaiList);
 
@@ -72,11 +82,14 @@ public class ChinaCaipuMain {
 					LOG.D(caiXi.mCaiXiName + " <--->完成");
 					break;
 				}
+				
 				Thread.sleep(MKUtils.genSleep());
-			}// end
+				
+			}// 本菜系完成
 
-			// 其中一个菜系完成
-		}
+		}//所有菜系完成
+		
+		
 		LOG.D("task over");
 	}
 

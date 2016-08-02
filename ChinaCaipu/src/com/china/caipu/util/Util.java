@@ -18,6 +18,16 @@ import com.mk.util.PathUtil;
  *         2016-4-5
  */
 public final class Util {
+	
+	public static boolean isNull(Object obj) {
+		if (obj == null || "".equals(obj) || "null".equals(obj)
+				|| " ".equals(obj)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * 
 	 * @param rs

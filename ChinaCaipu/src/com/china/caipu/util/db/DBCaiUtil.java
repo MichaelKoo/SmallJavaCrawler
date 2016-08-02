@@ -10,14 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.china.caipu.constant.Config;
+import com.china.caipu.util.Util;
 import com.china.caipu.vo.Cai;
 import com.mk.IsUtil;
 
-/**菜的相关操作，添加，删除，更新，查找
+/**
+ * 菜的相关操作，添加，删除，更新，查找
  * 
  * @author {MichaelKoo}
- *
- *2016-6-10
+ * 
+ *         2016-6-10
  */
 public final class DBCaiUtil {
 
@@ -64,6 +66,7 @@ public final class DBCaiUtil {
 	}
 
 	/**
+	 * 保存菜到数据库
 	 * 
 	 * @param cai
 	 * @return
@@ -127,7 +130,7 @@ public final class DBCaiUtil {
 		psmt.setString(1, cai.mName);
 
 		boolean result = false;
-		result = psmt.execute();
+		result = psmt.executeUpdate() > 0;
 
 		close(psmt);
 		ConnUtil.closeConn(conn);
@@ -140,8 +143,45 @@ public final class DBCaiUtil {
 	 * @param cai
 	 * @return
 	 */
-	public static boolean updateCai(Cai cai) {
-		return false;
+	public static boolean updateCaiDetail(Cai cai) {
+		if (Util.isNull(cai) || Util.isNull(cai.mCaiID)
+				|| Util.isNull(cai.mDetail)) {
+			return false;
+		}
+
+		Connection conn = ConnUtil.getConnection();
+		// update cai set caiDetail = '' where caiID ='';
+		PreparedStatement psmt = null;
+		boolean result = false;
+		try {
+			conn.setAutoCommit(false);
+
+			StringBuilder sql = new StringBuilder();
+			sql.append("UPDATE ").append(TABLE).append(" SET ")
+					.append(CPField.DETAIL).append(" = ? ");
+			sql.append(" WHERE ").append(CPField.ID).append(" = ? ");
+			psmt = conn.prepareStatement(sql.toString());
+
+			psmt.setString(1, cai.mDetail);
+			psmt.setString(2, cai.mCaiID);
+
+			result = psmt.executeUpdate() > 0;
+
+			conn.commit();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			close(psmt);
+			ConnUtil.closeConn(conn);
+		}
+
+		return result;
 	}
 
 	/**
@@ -191,6 +231,41 @@ public final class DBCaiUtil {
 	 * @return
 	 * @throws Exception
 	 */
+	public static List<Cai> findAllNotDetail() throws Exception {
+		List<Cai> result = new ArrayList<Cai>();
+		Connection conn = ConnUtil.getConnection();
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			StringBuilder sb = new StringBuilder();
+			sb.append("SELECT ").append(CPField.ID).append(",")
+					.append(CPField.DETAIL).append(",").append(CPField.NAME)
+					.append(" FROM ").append(TABLE);
+			sb.append(" WHERE ").append(CPField.DETAIL)
+					.append(" LIKE 'http://%'");
+
+			psmt = conn.prepareStatement(sb.toString());
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				Cai cai = new Cai();
+				cai.mCaiID = rs.getString(1);
+				cai.mDetail = rs.getString(2);
+				cai.mName = rs.getString(3);
+				result.add(cai);
+			}
+		} finally {
+			close(rs);
+			close(psmt);
+			ConnUtil.closeConn(conn);
+		}
+		return result;
+	}
+
+	/**
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	public static List<Cai> findAllCai() throws Exception {
 		List<Cai> result = new ArrayList<Cai>();
 		Connection conn = ConnUtil.getConnection();
@@ -220,7 +295,6 @@ public final class DBCaiUtil {
 		return result;
 	}
 
- 
 	/**
 	 * 
 	 * @param conn

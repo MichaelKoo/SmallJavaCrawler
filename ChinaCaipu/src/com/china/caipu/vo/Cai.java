@@ -1,10 +1,12 @@
 package com.china.caipu.vo;
 
+import java.lang.reflect.Field;
+
 /**
  * 
- * @author {Mark_Sir}
+ * @author {MichaelKoo, MK520VIP@163.com}
  * 
- *         2016-4-13
+ *         Cai.java
  */
 public final class Cai {
 
@@ -20,14 +22,20 @@ public final class Cai {
 	public String mDetailDescrip;
 
 	public String toString() {
-		StringBuffer sb = new StringBuffer();
-		sb.append(mName).append(SEPARATOR);
-		sb.append(mDescrip).append(SEPARATOR);
-		sb.append(mDetail).append(SEPARATOR);
-		sb.append(mImage).append(SEPARATOR);
+		StringBuilder sb = new StringBuilder();
+		Class<?> cls = getClass();
+		Field[] fs = cls.getDeclaredFields();
+		try {
+			for (Field field : fs) {
+				Object value = field.get(this);
+				sb.append(value).append(SEPARATOR);
+			}
+
+		} catch (Exception e) {
+
+		}
 
 		return sb.toString();
-
 	}
 
 }// end

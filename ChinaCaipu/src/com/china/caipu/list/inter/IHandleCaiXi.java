@@ -5,11 +5,11 @@ import java.util.List;
 import com.china.caipu.vo.CaiXi;
 
 /**
- * {@link #getCaiXi()}
+ * 获取菜系方式
  * 
- * @author {Mark_Sir}
+ * @author {MichaelKoo, MK520VIP@163.com}
  * 
- *         2016-4-13
+ *         IHandleCaiXi.java
  */
 public interface IHandleCaiXi {
 	/**

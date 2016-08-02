@@ -125,6 +125,13 @@ public final class DBCaiXiUtil {
 		return null;
 	}
 
+	/**
+	 * 把ResultSet转为CaiXi
+	 * 
+	 * @param rs
+	 * @return
+	 * @throws SQLException
+	 */
 	private static CaiXi handleResultSet(ResultSet rs) throws SQLException {
 		CaiXi cai = new CaiXi();
 		cai.mCaiXiID = rs.getString(1);
@@ -133,7 +140,8 @@ public final class DBCaiXiUtil {
 		return cai;
 	}
 
-	/**获取所有菜系
+	/**
+	 * 获取所有菜系
 	 * 
 	 * @return
 	 * @throws Exception

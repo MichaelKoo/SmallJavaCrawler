@@ -18,9 +18,6 @@ import com.china.caipu.vo.CaiList;
  * 4¡¢{@link #handleCaiList(List)}
  * 
  * 
- * @author {Mark_Sir}
- * 
- *         2016-4-13
  */
 public abstract class AbsListHandler implements IGetContent, IHandleCaiXi,
 		ISaveContent {

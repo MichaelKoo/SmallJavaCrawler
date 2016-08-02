@@ -2,12 +2,12 @@ package com.china.caipu.list;
 
 /**
  * 
- * @author {Mark_Sir}
+ * @author {MichaelKoo, MK520VIP@163.com}
  * 
- *         2016-4-13
+ *         AbsListHandlerFactory.java
  */
 public final class AbsListHandlerFactory {
-	
+
 	/**
 	 * @see AbsListHandlerImpl
 	 * @return

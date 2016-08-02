@@ -5,9 +5,9 @@ import java.util.List;
 /**
  * ²ËÆ×ÁÐ±í
  * 
- * @author {Mark_Sir}
- * 
- *         2016-4-13
+ * @author {MichaelKoo, MK520VIP@163.com}
+ *
+ *  CaiList.java
  */
 public final class CaiList {
 
